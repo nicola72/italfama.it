@@ -1,0 +1,19 @@
+@money($valore)  //per formattare il prezzo
+$page->url() //per prendere la url intera della pagina
+
+per applicare il paginator ad una collection
+codice da mettere nel boot dell'AppServiceProvider:
+if (!Collection::hasMacro('paginate'))
+        {
+            Collection::macro('paginate',
+                function ($perPage = 15, $page = null, $options = [])
+                {
+                    $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+                    return (new LengthAwarePaginator(
+                        $this->forPage($page, $perPage)->values()->all(), $this->count(), $perPage, $page, $options))
+                        ->withPath('');
+                });
+        }
+
+per recuperare l'user autenticato
+Request::user('website'), ho messo website perchè non è la guard di default
