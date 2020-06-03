@@ -33,14 +33,8 @@ class PageController extends Controller
 
     public function index(Request $request)
     {
-        //per stabilire la lingua dobbiamo basarci sul dominio/alias
-        $domain = $request->getHttpHost();
-        $domain = str_replace("www.","",$domain);
-        $domain = Domain::where('nome',$domain)->first();
-        $locale = $domain->locale;
-        \App::setLocale($locale);
+        \App::setLocale('it');
 
-        $seo = Seo::where('locale',$locale)->where('homepage',1)->first();
         $slider = Slider::where('visibile',1)->first();
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
         $prodotti_novita = Product::where('visibile',1)->where('availability_id','!=',2)->where('novita',1)->get();
@@ -53,7 +47,6 @@ class PageController extends Controller
 
         $params = [
             'carts' => $this->getCarts(),
-            'seo' => $seo,
             'slider' => $slider,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null, //paramtero necessario per stabilire il collapse del menu a sinistra
