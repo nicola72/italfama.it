@@ -35,118 +35,33 @@ class PageController extends Controller
     {
         \App::setLocale('it');
 
-        $slider = Slider::where('visibile',1)->first();
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
         $prodotti_novita = Product::where('visibile',1)->where('availability_id','!=',2)->where('novita',1)->get();
         $abbinamenti_novita = Pairing::where('visibile',1)->where('novita',1)->get();
         $prodotti_offerta = Product::where('visibile',1)->where('availability_id','!=',2)->where('offerta',1)->get();
         $abbinamenti_offerta = Pairing::where('visibile',1)->where('offerta',1)->get();
-        $popup = Newsitem::where('visibile',1)->where('popup',1)->first();
+        $news = Newsitem::where('visibile',1)->get();
 
 
 
         $params = [
             'carts' => $this->getCarts(),
-            'slider' => $slider,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null, //paramtero necessario per stabilire il collapse del menu a sinistra
             'prodotti_novita' => $prodotti_novita,
             'abbinamenti_novita' => $abbinamenti_novita,
             'prodotti_offerta' => $prodotti_offerta,
             'abbinamenti_offerta' => $abbinamenti_offerta,
-            'popup'=> $popup
+            'news'=> $news
         ];
         return view('website.page.index',$params);
     }
 
-
-    public function page(Request $request)
+    protected function macrocategoryPage(Request $request)
     {
-        $slug = $request->segment(2);
-        $lang = $request->segment(1);
+        $macrocategory = Macrocategory::find($request->id);
 
-        //prendo la url con quello slug e con la lingua
-        $url = Url::where('slug',$slug)->where('locale',$lang)->first();
-
-        if($url)
-        {
-            //se non siamo sul dominio giusto faccio il redirect
-            if($url->domain->nome != $_SERVER['HTTP_HOST'] && "www.".$url->domain->nome != $_SERVER['HTTP_HOST'])
-            {
-                header("HTTP/1.1 301 Moved Permanently");
-                header("Location: https://www.".$url->domain->nome."/".$url->locale."/".$url->slug);
-                exit();
-            }
-
-            switch ($url->urlable_type) {
-                case 'App\Model\Page':
-                    return $this->simplePage($request,$url);
-                    break;
-                case 'App\Model\Macrocategory':
-                    return $this->macrocategoryPage($request,$url);
-                    break;
-                case 'App\Model\Category':
-                    return $this->categoryPage($request,$url);
-                    break;
-                case 'App\Model\Product':
-                    return $this->productPage($request,$url);
-                    break;
-                case 'App\Model\Pairing':
-                    return $this->pairingPage($request,$url);
-                    break;
-                default:
-                    return view('website.errors.404');
-            }
-        }
-        else
-        {
-            $params = [
-                'carts' => $this->getCarts(),
-            ];
-            return view('website.errors.404',$params);
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @param $url
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * per le pagine statiche stabilite nel pannello nella sezione Page
-     */
-    protected function simplePage(Request $request,$url)
-    {
-        //cerca l'oggetto Page con l'id della url
-        $page = Page::find($url->urlable_id);
-
-        //poi chiama la funzione col nome della pagina
-        if(method_exists($this,$page->nome))
-        {
-            return $this->{$page->nome}($request,$url);
-        }
-        else
-        {
-            return view('website.errors.not_found_method',['method'=>$page->nome]);
-        }
-    }
-
-    protected function macrocategoryPage(Request $request,$url)
-    {
-        $macrocategory = Macrocategory::find($url->urlable_id);
-
-        $seo = $url->seo; //se ha un seo specifico
-        //altrimenti cerco il seo generico per le categorie
-        if(!$seo)
-        {
-            $seo = Seo::where('bind_to','App\Model\Macrocategory')->where('locale',\App::getLocale())->first();
-            $segnaposto = $macrocategory->{'nome_'.\App::getLocale()};
-            $seo->title = str_replace("%s",$segnaposto ,$seo->title);
-            $seo->h1 = str_replace("%s",$segnaposto ,$seo->h1);
-            $seo->description = str_replace("%s",$segnaposto ,$seo->description);
-            $seo->h2 = str_replace("%s",$segnaposto ,$seo->h2);
-            $seo->alt = str_replace("%s",$segnaposto ,$seo->alt);
-        }
-
-        return $this->catalogo($request,$macrocategory,$macrocategory,$seo);
+        return $this->catalogo($request,$macrocategory,$macrocategory);
     }
 
     protected function categoryPage(Request $request,$url)
@@ -248,7 +163,7 @@ class PageController extends Controller
      * Può essere una lista di Prodotti Singoli o Abbinamenti
      * Può essere chiamata normalmente oppure tramite ajax cliccando sul paginatore
      */
-    protected function catalogo(Request $request,$macrocategory,$model,$seo = null)
+    protected function catalogo(Request $request,$macrocategory,$model)
     {
         //il parametro $model può essere o un App\Model|Macrocategory o un App\Model\Category
         //se il model è di tipo App\Model\Category allora vuol dire che siamo in una pagina categoria
@@ -311,7 +226,6 @@ class PageController extends Controller
 
         $params = [
             'carts' => $this->getCarts(),
-            'seo' => $seo,
             'macrocategory' => $macrocategory,
             'macrocategorie' => $macrocategorie,
             'macro_request' => $macrocategory->id,

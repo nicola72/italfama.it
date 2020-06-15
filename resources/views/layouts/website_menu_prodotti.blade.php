@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading fjalla" style="font-weight: 100;">
-        <a href="{{$pages->where('nome','tutti_prodotti')->first()->url()}}">
-            {{$pages->where('nome','tutti_prodotti')->first()->label()}}
+        <a href="{{ url(app()->getLocale().'/tutti_prodotti') }}" style="color: white;">
+            @lang('msg.tutti_i_prodotti')
         </a>
     </div>
     <div class="panel-body">
@@ -15,7 +15,7 @@
                         @if($macro->categories)
                             @foreach($macro->categories as $category)
                                 <li class="categoria_li">
-                                    <a href="{{$category->url()}}">
+                                    <a href="{{ url(app()->getLocale().'/categoria',['id'=>$category->id]) }}">
                                         {{$category->{'nome_'.app()->getLocale()} }}
                                     </a>
                                 </li>
@@ -31,14 +31,14 @@
 
                     @if($macro->id != 22)
                         <li class="{{ ($count > 5) ? 'categoria_li_1':'categoria_li' }}" >
-                            <a href="{{$macro->url()}}"	data-toggle="collapse" data-target="#sez_{{$count}}" class="categoria text-uppercase" >
+                            <a href="{{ url(app()->getLocale().'/macrocategoria',['id'=>$macro->id]) }}" data-toggle="collapse" data-target="#sez_{{$count}}" class="categoria text-uppercase" >
                                 {{$macro->{'nome_'.app()->getLocale()} }}
                                 <i class="fa fa-plus"></i>
                             </a>
                             <ul id="sez_{{$count}}" class="{{ ($macro_request == $macro->id) ? '':'collapse' }} collapseItem">
                                 @foreach($macro->categories as $category)
                                     <li>
-                                        <a href="{{$category->url()}}" class="text-uppercase">
+                                        <a href="{{ url(app()->getLocale().'/categoria',['id'=>$category->id]) }}" class="text-uppercase">
                                             <i class="fa fa-caret-right" aria-hidden="true"></i>
                                             {{$category->{'nome_'.app()->getLocale()} }}
                                         </a>

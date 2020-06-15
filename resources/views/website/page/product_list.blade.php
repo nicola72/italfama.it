@@ -3,17 +3,10 @@
     <section class="lightSection clearfix pageHeader">
         <div class="container">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-12">
                     <div class="page-title">
                         <h2 class="fjalla">{{ $titolo }}</h2>
                     </div>
-                </div>
-
-                <div class="col-xs-6">
-                    <ol class="breadcrumb pull-right">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="#" id="name_category">{{ $titolo }}</a></li>
-                    </ol>
                 </div>
             </div>
         </div>
@@ -47,16 +40,6 @@
                         <!-- menu prodotti -->
                         @include('layouts.website_menu_prodotti')
                         <!-- fine menu prodotti -->
-
-                        <!-- box facebook -->
-                        @include('layouts.website_box_facebook')
-                        <!-- -->
-
-                        <!-- box spedizione -->
-                        @if(app()->getLocale() == 'it')
-                            @include('layouts.website_box_spedizione')
-                        @endif
-                        <!-- -->
 
                     </div>
                 </div>

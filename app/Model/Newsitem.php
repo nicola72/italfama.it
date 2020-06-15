@@ -32,4 +32,24 @@ class Newsitem extends Model implements Sortable
         'popup',
         'order',
     ];
+
+    public function images()
+    {
+        return $this->morphMany('App\Model\File','fileable');
+    }
+
+    public function cover()
+    {
+        $images = $this->morphMany('App\Model\File','fileable');
+        if($images)
+        {
+            $images = $images->orderBy('order');
+            $prima_img = $images->first();
+            if(is_object($prima_img))
+            {
+                return $images->first()->path;
+            }
+        }
+        return 'default.jpg';
+    }
 }

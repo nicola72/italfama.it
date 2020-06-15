@@ -97,5 +97,18 @@ return[
     'torna_al_carrello' => 'Torna al Carrello',
     'procedi_col_pagamento' => 'Procedi col pagamento',
     'set_correlati' => 'Set Correlati',
+    'info_acquisti' => 'per INFO acquisti',
+    'label_azienda' => 'azienda',
+    'label_dove_siamo' => 'dove siamo',
+    'label_contatti' => 'contatti',
+    'label_area_riservata' => 'area riservata',
+    'italfama_parte_del_consorzio' => 'Italfama è parte del Consorzio<br>ITALY BY ITALY',
+    'fabbrica_di_scacchi' => 'Fabbrica di Scacchi',
+    'il_marchio_italfama' => 'IL marchio ITALFAMA<br />è sinonimo<br />di qualità e buon gusto<br />in tutto il mondo.',
+    'gli_scacchi_di_italfama_sono_molto_apprezzati' => 'Gli Scacchi ITALFAMA sono molto apprezzati dal collezionista di settore, ma soprattutto sono un importante articolo da regalo e un raffinato complemento d’arredo.',
+    'ricerca_avanzata' => 'RICERCA AVANZATA',
+    'parola_chiave' => 'Parola chiave',
+    'materiale' => 'Materiale',
+    'tutti_i_prodotti' => 'Tutti i prodotti',
 
 ];

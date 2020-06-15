@@ -15,7 +15,7 @@
                         <ul id="m_sez_{{$count}}" class="collapse collapseItem">
                             @foreach($macro->categories as $category)
                                 <li>
-                                    <a href="{{$category->url()}}">
+                                    <a href="{{ url(app()->getLocale().'/categoria',['id'=>$category->id]) }}">
                                         <i class="fa fa-caret-right" aria-hidden="true"></i>
                                         {{ $category->{'nome_'.app()->getLocale()} }}
                                     </a>

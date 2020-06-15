@@ -97,5 +97,17 @@ return[
     'torna_al_carrello' => 'Back to Cart',
     'procedi_col_pagamento' => 'Proceed with the payment',
     'set_correlati' => 'Suggested combination',
-
+    'info_acquisti' => 'INFO purchases',
+    'label_azienda' => 'company',
+    'label_dove_siamo' => 'where we are',
+    'label_contatti' => 'contacts',
+    'label_area_riservata' => 'reserved area',
+    'italfama_parte_del_consorzio' => 'Italfama is part of the Consortium<br>ITALY BY ITALY',
+    'fabbrica_di_scacchi' => 'Chess Factory',
+    'il_marchio_italfama' => 'ITALFAMA brand<br />is synonymous<br /> of quality and good taste<br /> worldwide.',
+    'gli_scacchi_di_italfama_sono_molto_apprezzati' => 'Italfama chess set are very appreciated by all chess collectors and mostly they are an important gift and a refined furnishing for the home.',
+    'ricerca_avanzata' => 'ADVANCED SEARCH',
+    'parola_chiave' => 'Keyword',
+    'materiale' => 'Material',
+    'tutti_i_prodotti' => 'All the items',
 ];

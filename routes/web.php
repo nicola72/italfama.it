@@ -5,6 +5,15 @@ Route::get('/','Website\PageController@index')->name('website.home');
 
 Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'middleware' => 'setlocale'],function(){
 
+    Route::get('/home', 'Website\PageController@index');
+    Route::get('/azienda', 'Website\PageController@azienda');
+    Route::get('/dove_siamo', 'Website\PageController@dove_siamo');
+    Route::get('/contatti', 'Website\PageController@contatti');
+    Route::get('/area_riservata', 'Website\PageController@area_riservata');
+    Route::get('/categoria/{id}', 'Website\PageController@categoryPage');
+    Route::get('/macrocategoria/{id}', 'Website\PageController@macrocategoryPage');
+    Route::get('/tutti_i_prodotti', 'Website\PageController@tutti_i_prodotti');
+    Route::post('/ricerca','Website\PageController@ricerca');
 
     //per L'autorizzazione
     Route::get('/login', 'Website\Auth\LoginController@showLoginAndRegisterForm')->name('website.login');

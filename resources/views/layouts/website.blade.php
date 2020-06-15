@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<?php echo'<pre>';print_r(session()->all());echo'</pre>';?>
 <html lang="{{App::getLocale()}}">
     <head>
         @if(App::getLocale() == 'it')
@@ -68,38 +67,28 @@
         <!-- FINE MODALE -->
 
     @section('scripts')
-        <script src="/assets/js/jquery-ui/jquery-ui.js"></script>
-        <script src="/assets/js/bootstrap.min.js"></script>
-        <script src="/assets/js/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-        <script src="/assets/js/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-        <script src="/assets/js/owl-carousel/owl.carousel.js"></script>
-        <script src="/assets/js/selectbox/jquery.selectbox-0.1.3.min.js"></script>
-        <script src="/assets/js/countdown/jquery.syotimer.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="/assets/plugins/jquery-ui/jquery-ui.js"></script>
+        <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/plugins/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+        <script src="/assets/plugins/rs-plugin/js/jquery.themepunch.revolution.js"></script>
+        <script src="/assets/plugins/owl-carousel/owl.carousel.js"></script>
+        <script src="/assets/plugins/selectbox/jquery.selectbox-0.1.3.min.js"></script>
+        <script src="/assets/plugins/countdown/jquery.syotimer.js"></script>
         <script src="/assets/js/jquery.magnific-popup.min.js"></script>
-        <script src="/assets/js/lightbox.js"></script>
-        <script src="/assets/js/jquery.validate.js"></script>
-        <script src="/assets/js/additional-methods.js"></script>
         <script src="/assets/js/custom.js"></script>
-        <script src="/assets/js/website.js"></script>
         <script>
-            function show_others(url)
-            {
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "html",
-                    success: function (data)
+            $(document).ready(function() {
+                $('.galleria-item').magnificPopup(
                     {
-                        $('#product_list').html(data);
-                        window.scrollTo(0, 0);
-
-                    },
-                    error: function ()
-                    {
-                        alert("Si è verificato un errore! Riprova!");
-                    }
-                });
-            }
+                        type:'image',
+                        gallery: {
+                            enabled: true,
+                            navigateByImgClick: true,
+                            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+                        },
+                    });
+            });
         </script>
 
     @show
