@@ -28,19 +28,9 @@
                 <div class="col-md-3 col-sm-12 sideBar ">
 
                     <div class="panel panel-default hidden-xs hidden-sm">
-                        <!-- menu prodotti -->
+                    <!-- menu prodotti -->
                     @include('layouts.website_menu_prodotti')
                     <!-- fine menu prodotti -->
-
-                        <!-- box facebook -->
-                    @include('layouts.website_box_facebook')
-                    <!-- -->
-
-                        <!-- box spedizione -->
-                    @if(app()->getLocale() == 'it')
-                        @include('layouts.website_box_spedizione')
-                    @endif
-                    <!-- -->
 
                     </div>
                 </div>
@@ -59,8 +49,8 @@
                                         @if($product->images)
                                             @foreach($product->images as $img)
                                                 <div class="item {{ ($count == 1) ? 'active' : '' }}" data-thumb="0">
-                                                    <a href="{{ $website_config['cs_big_dir'].$img->path }}"  class="galleria-item" data-lightbox="image-1">
-                                                        <img src="{{ $website_config['cs_big_dir'].$img->path }}" class="img-responsive" alt="{{$seo->alt ?? ''}}"/>
+                                                    <a href="{{ $chess_domain.$website_config['ital_big_dir'].$img->path }}"  class="galleria-item" data-lightbox="image-1">
+                                                        <img src="{{ $chess_domain.$website_config['ital_big_dir'].$img->path }}" class="img-responsive" alt=""/>
                                                     </a>
                                                 </div>
                                                 @php $count++ @endphp
@@ -89,26 +79,32 @@
 
                                 <h2 style="margin-top: 10px;">{{ $product->{'nome_'.app()->getLocale()} }}</h2>
 
-                                @if($product->prezzo != '0.00' && $product->prezzo != '100000.00')
+                                @if(Auth::guard('website')->check())
+                                    @if($product->prezzo != '0.00' && $product->prezzo != '100000.00')
 
-                                    @if($product->is_scontato())
-                                        <h3 style="margin-bottom:6px;">
-                                            <span class="prezzo_pieno">@money($product->prezzo)</span>
-                                            <br>
-                                            <span style="color:#840025;">@money($product->prezzo_scontato)</span>
-                                        </h3>
+                                        @if(Auth::user()->vede_p_fabbrica)
+                                            <span class="p_ital p_fabbrica" >
+                                                Prezzo Fabbrica: @money($product->prezzo_fabbrica)
+                                            </span>
+                                        @endif
+                                        @if(Auth::user()->vede_p_vendita)
+                                            <span class="p_ital p_vendita" >
+                                                Prezzo Vendita: @money($product->prezzo)
+                                            </span>
+                                        @endif
+                                        @if(Auth::user()->vede_p_netto)
+                                            <span class="p_ital p_netto" >
+                                                Prezzo Netto: @money($product->prezzo_netto(Auth::user()))
+                                            </span>
+                                        @endif
+
                                     @else
-                                        <h3 style="margin-bottom:6px;">
-                                            <span>@money($product->prezzo)</span>
-                                        </h3>
+                                        <h3>@lang('msg.su_ordinazione')</h3>
                                     @endif
-
-                                @else
-                                    <h3>@lang('msg.su_ordinazione')</h3>
                                 @endif
 
 
-                                <p style="margin-bottom:16px;line-height:1.4">
+                                <p style="margin-bottom:16px;line-height:1.4;margin-top:20px">
                                     @lang('msg.codice_prodotto'): <strong>{{ $product->codice }}</strong>
                                     <br /><br />
                                     {{ $product->{'desc_'.app()->getLocale()} }}
@@ -120,16 +116,15 @@
                                     </span>
                                 </p>
 
-                                @if($product->prezzo != '0.00' && $product->prezzo != '100000.00')
-                                    <div class="btn-area">
-                                        <a href="javascript:void(0)" onclick="addToCart('{{ url(app()->getLocale().'/cart/addproduct',$product->id) }}')" class="btn btn-primary btn-block">
-                                            + carrello <i class="fa fa-angle-right" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
+                                @if(Auth::guard('website')->check())
+                                    @if($product->prezzo != '0.00' && $product->prezzo != '100000.00')
+                                        <div class="btn-area">
+                                            <a href="javascript:void(0)" onclick="addToCart('{{ url(app()->getLocale().'/cart/addproduct',$product->id) }}')" class="btn btn-primary btn-block">
+                                                + carrello <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    @endif
                                 @endif
-                                <a href="javascript:void(0)" onclick="addToWishList('{{ url(app()->getLocale().'/wishlist/addproduct',$product->id) }}')" style="background-color: #840025; padding: 10px;">
-                                    <i class="fa fa-heart" aria-hidden="true" style="font-size: 130%;"></i>
-                                </a>
                                 <br />
 
 

@@ -77,6 +77,7 @@
         <script src="/assets/plugins/countdown/jquery.syotimer.js"></script>
         <script src="/assets/js/jquery.magnific-popup.min.js"></script>
         <script src="/assets/js/custom.js"></script>
+        <script src="/assets/js/website.js"></script>
         <script>
             $(document).ready(function() {
                 $('.galleria-item').magnificPopup(

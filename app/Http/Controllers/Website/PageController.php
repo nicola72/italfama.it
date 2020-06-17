@@ -64,49 +64,23 @@ class PageController extends Controller
         return $this->catalogo($request,$macrocategory,$macrocategory);
     }
 
-    protected function categoryPage(Request $request,$url)
+    protected function categoryPage(Request $request)
     {
-        $category = Category::find($url->urlable_id);
+        $category = Category::find($request->id);
         $macrocategory = Macrocategory::find($category->macrocategory_id);
 
-        $seo = $url->seo; //se ha un seo specifico
-        //altrimenti cerco il seo generico per le categorie
-        if(!$seo)
-        {
-            $seo = Seo::where('bind_to','App\Model\Category')->where('locale',\App::getLocale())->first();
-            $segnaposto = $category->{'nome_'.\App::getLocale()};
-            $seo->title = str_replace("%s",$segnaposto ,$seo->title);
-            $seo->h1 = str_replace("%s",$segnaposto ,$seo->h1);
-            $seo->description = str_replace("%s",$segnaposto ,$seo->description);
-            $seo->h2 = str_replace("%s",$segnaposto ,$seo->h2);
-            $seo->alt = str_replace("%s",$segnaposto ,$seo->alt);
-        }
-
-        return $this->catalogo($request,$macrocategory,$category,$seo);
+        return $this->catalogo($request,$macrocategory,$category);
     }
 
-    protected function productPage(Request $request,$url)
+    protected function productPage(Request $request)
     {
-        $product = Product::find($url->urlable_id);
-        $seo = $url->seo; //se ha un seo specifico
-        //altrimenti cerco il seo generico per i prodotti
-        if(!$seo)
-        {
-            $seo = Seo::where('bind_to','App\Model\Product')->where('locale',\App::getLocale())->first();
-            $segnaposto = $product->{'nome_'.\App::getLocale()};
-            $seo->title = str_replace("%s",$segnaposto ,$seo->title);
-            $seo->h1 = str_replace("%s",$segnaposto ,$seo->h1);
-            $seo->description = str_replace("%s",$segnaposto ,$seo->description);
-            $seo->h2 = str_replace("%s",$segnaposto ,$seo->h2);
-            $seo->alt = str_replace("%s",$segnaposto ,$seo->alt);
-        }
+        $product = Product::find(decrypt($request->id));
 
         //le macrocategorie per il menu nella colonna a sinistra
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
 
         $params = [
             'carts' => $this->getCarts(),
-            'seo' => $seo,
             'macrocategory' => false,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null,
@@ -117,22 +91,9 @@ class PageController extends Controller
         return view('website.page.product',$params);
     }
 
-    protected function pairingPage(Request $request,$url)
+    protected function pairingPage(Request $request)
     {
-        $pairing = Pairing::find($url->urlable_id);
-
-        $seo = $url->seo; //se ha un seo specifico
-        //altrimenti cerco il seo generico per gli abbinamenti
-        if(!$seo)
-        {
-            $seo = Seo::where('bind_to','App\Model\Pairing')->where('locale',\App::getLocale())->first();
-            $segnaposto = $pairing->{'nome_'.\App::getLocale()};
-            $seo->title = str_replace("%s",$segnaposto ,$seo->title);
-            $seo->h1 = str_replace("%s",$segnaposto ,$seo->h1);
-            $seo->description = str_replace("%s",$segnaposto ,$seo->description);
-            $seo->h2 = str_replace("%s",$segnaposto ,$seo->h2);
-            $seo->alt = str_replace("%s",$segnaposto ,$seo->alt);
-        }
+        $pairing = Pairing::find(decrypt($request->id));
 
         //le macrocategorie per il menu nella colonna a sinistra
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
@@ -142,7 +103,6 @@ class PageController extends Controller
 
         $params = [
             'carts' => $this->getCarts(),
-            'seo' => $seo,
             'macrocategory' => false,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null,
@@ -202,6 +162,7 @@ class PageController extends Controller
         $styles = Style::all();
         $chess_materials = Material::where('per','scacchi')->get();
         $board_materials = Material::where('per','scacchiera')->get();
+
 
         //se la macro id è 22 allora siamo su una categoria ABBINAMENTI
         if($macrocategory->id == 22)
@@ -329,7 +290,6 @@ class PageController extends Controller
 
     protected function tutti_prodotti(Request $request,$url)
     {
-        $seo = $url->seo;
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
 
         //le configurazioni varie del sito web

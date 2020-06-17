@@ -149,6 +149,13 @@ body, html{
 	color:#000;
 }
 
+.p_ital{
+	color:#232323;
+	display: block;
+	padding-bottom:3px;
+	font-size: 14px;
+}
+
 .productImage
 {
 	height:180px !important;

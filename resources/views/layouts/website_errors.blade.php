@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="{{App::getLocale()}}">
 <head>
-    <title>{{$seo->title ?? 'Chess Store'}}</title>
+    @if(App::getLocale() == 'it')
+        <title>Italfama Produzione Vendita Scacchi Firenze Toscana</title>
+    @else
+        <title>Italfama</title>
+    @endif
+
     <meta charset="utf-8">
-    <meta name="Keywords" content="{{$seo->keywords ?? ''}}" />
-    <meta name="Description" content="{{$seo->description ?? ''}}" />
+    <meta name="Keywords" content="Italfam" />
+    <meta name="Description" content="Italfama è azienda  leader a livello mondiale nella produzione  di scacchi, scacchiere e statue bronzate con sede a Calenzano, Firenze, Toscana" />
     <meta name="language" content="{{App::getLocale()}}" />
     <meta http-equiv="Cache-control" content="public">
     <meta name="author" content="Designed by InYourLife- https://www.inyourlife.info" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="function" content="{{ $function ?? '' }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.ico">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
     @section('styles')
 
-        link href="/assets/plugins/jquery-ui/jquery-ui.css" rel="stylesheet">
+        <link href="/assets/plugins/jquery-ui/jquery-ui.css" rel="stylesheet">
         <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="/assets/plugins/selectbox/select_option1.css" rel="stylesheet">
@@ -49,12 +54,10 @@
 <body>
 <div class="main-wrapper">
 
+    @include('layouts.website_flash-message')
+
     @yield('content')
-    <div class="h2-wrapper">
-        <h2 class="h2 hidden-xs">
-            {{$seo->h2 ?? ''}}
-        </h2>
-    </div>
+
 </div>
 
 <!-- MODALE -->
@@ -62,21 +65,23 @@
 <!-- FINE MODALE -->
 
 @section('scripts')
-    <script src="/assets/js/jquery-ui/jquery-ui.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-    <script src="/assets/js/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-    <script src="/assets/js/owl-carousel/owl.carousel.js"></script>
-    <script src="/assets/js/selectbox/jquery.selectbox-0.1.3.min.js"></script>
-    <script src="/assets/js/countdown/jquery.syotimer.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="/assets/plugins/jquery-ui/jquery-ui.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/assets/plugins/rs-plugin/js/jquery.themepunch.revolution.js"></script>
+    <script src="/assets/plugins/owl-carousel/owl.carousel.js"></script>
+    <script src="/assets/plugins/selectbox/jquery.selectbox-0.1.3.min.js"></script>
+    <script src="/assets/plugins/countdown/jquery.syotimer.js"></script>
     <script src="/assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="/assets/js/lightbox.js"></script>
-    <script src="/assets/js/jquery.validate.js"></script>
-    <script src="/assets/js/additional-methods.js"></script>
     <script src="/assets/js/custom.js"></script>
     <script src="/assets/js/website.js"></script>
 
+
 @show
+@yield('js_script')
+@yield('js_script_form')
+@yield('js_script_form2')
 @stack('body')
 </body>
 </html>

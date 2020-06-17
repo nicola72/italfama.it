@@ -1,11 +1,11 @@
 @extends('layouts.website')
 @section('content')
-    <section class="lightSection clearfix pageHeader">
+    <section class="lightSection clearfix pageHeader"	style="background-color: #cdc8c6;">
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
                     <div class="page-title">
-                        <h2 class="fjalla">@lang('msg.azienda')</h2>
+                        <h2 class="playfair" style="color: #6f2412;">LOGIN</h2>
                     </div>
                 </div>
 
@@ -16,22 +16,8 @@
         <div class="container">
             <div class="row">
 
-                <!-- COLONNA A SINISTRA -->
-                <div class="col-md-3 col-sm-12 col-xs-12 sideBar ">
-
-                    <!-- menu prodotti -->
-                @include('layouts.website_menu_prodotti')
-                <!-- fine menu prodotti -->
-
-                    <!-- box facebook -->
-                @include('layouts.website_box_facebook')
-                <!-- -->
-
-                </div>
-                <!-- FINE COLONNA SINISTRA -->
-
                 <!-- PAGINA -->
-                <div class="col-md-9 col-xs-12 col-sm-12">
+                <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="page-header">
@@ -39,11 +25,6 @@
                             </div>
                             @include('website.form.form_login')
                             <br />
-                            <p>
-                                <a style="font-size:120%; font-weight:bold; color:#840025" href="{{route('website.password.request',['locale'=>app()->getLocale()])}}">
-                                    @lang('msg.recupera_password')
-                                </a>
-                            </p>
                         </div>
                         <div class="col-md-6">
                             <div class="page-header">

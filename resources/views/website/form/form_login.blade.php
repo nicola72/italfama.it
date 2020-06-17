@@ -1,7 +1,7 @@
 <form id="{{ $form_login }}" action="" method="post" data-type="contact">
     {{ csrf_field() }}
     <div class="form-group">
-        <label>username/email</label>
+        <label>email</label>
         <input class="form-control" name="email" id="email" />
     </div>
     <div class="form-group">
@@ -10,7 +10,7 @@
 
     </div>
     <div class="form-group">
-        <button id="submit_btn" type="submit" class="btn btn-default" style="color:#fff; background-color:#000">Login</button>
+        <button id="submit_btn" type="submit" class="btn btn-default" style="color:#fff; background-color:#000;padding:13px 10px">Login</button>
     </div>
     <div class="form-group">
         <div id="login_msg" style="color:red">

@@ -21,6 +21,7 @@ class Product extends Model implements Sortable
         'codice',
         'prezzo',
         'prezzo_scontato',
+        'prezzo_fabbrica',
         'acquistabile',
         'acquistabile_italfama',
         'stock',
@@ -111,13 +112,19 @@ class Product extends Model implements Sortable
         return 'default.jpg';
     }
 
-    public function prezzo_vendita()
+    public function prezzo_netto($user)
     {
-        if($this->prezzo_scontato != '0.00')
-        {
-            return $this->prezzo_scontato;
-        }
-        return $this->prezzo;
-    }
+        $sconto = $user->sconto;
+        $tipo_sconto = $user->tipo_sconto;
 
+        if($tipo_sconto == '+')
+        {
+            $prezzo = $this->prezzo_fabbrica + (($this->prezzo_fabbrica / 100) * $sconto);
+        }
+        else
+        {
+            $prezzo = $this->prezzo_fabbrica - (($this->prezzo_fabbrica / 100) * $sconto);
+        }
+        return $prezzo;
+    }
 }

@@ -2,9 +2,8 @@
 namespace App\Http\Controllers\Website;
 
 use App\Mail\Contact;
-use App\Model\Cart;
+use App\Model\ItalCart;
 use App\Model\Category;
-use App\Model\Country;
 use App\Model\Domain;
 use App\Model\File;
 use App\Model\Macrocategory;
@@ -12,17 +11,9 @@ use App\Model\Material;
 use App\Model\Newsitem;
 use App\Model\Page;
 use App\Model\Pairing;
-use App\Model\Product;
-use App\Model\Province;
 use App\Model\Review;
-use App\Model\Seo;
-use App\Model\Slider;
 use App\Model\Style;
-use App\Model\Website\UserDetail;
-use App\Service\EsenzioneIva;
-use App\Service\SpeseSpedizione;
 use Illuminate\Http\Request;
-use App\Model\Url;
 use App\Http\Controllers\Controller;
 use App\Service\GoogleRecaptcha;
 use Illuminate\Pagination\Paginator;
@@ -40,43 +31,25 @@ class CartController extends Controller
     {
         $carts = $this->getCarts();
 
-        if(\Auth::check())
+        if(!\Auth::check())
         {
-            $user = \Auth::getUser();
-            $user_details = UserDetail::where('user_id', $user->id)->first();
+            return redirect('/');
         }
-        else
-        {
-            $user = false;
-            $user_details = false;
-        }
+
+        $user = \Auth::user();
 
         $importo_carrello = 0;
         foreach($carts as $cart)
         {
-            $importo_carrello+= ($cart->product->prezzo_vendita() * $cart->qta);
+            $importo_carrello+= ($cart->product->prezzo_netto($user) * $cart->qta);
         }
 
-        $peso_carrello = 0;
-        foreach($carts as $cart)
-        {
-            $peso_carrello+= ($cart->product->peso * $cart->qta);
-        }
-
-        Session::put('peso_carrello',$peso_carrello);
-
-        $province = Province::all()->sortBy('provincia');
-        $countries = Country::all()->sortBy('nome_'.\App::getLocale());
 
         $params = [
             'carts' => $carts,
             'form_name' => 'form_carrello',
             'user' => $user,
-            'user_details' => $user_details,
-            'province' => $province,
-            'countries' => $countries,
             'importo_carrello' => $importo_carrello,
-            'peso_carrello' => $peso_carrello,
         ];
 
         return view('website.cart.index',$params);

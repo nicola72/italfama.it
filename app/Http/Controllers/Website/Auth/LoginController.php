@@ -71,12 +71,14 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
+
         //provo a effettare il login
         if ($this->attemptLogin($request))
         {
             //se andato a buon fine
             return $this->sendLoginResponse($request);
         }
+
 
         //Se il login non ha avuto successo incrementiamo il numero dei tentativi
         //e redirect alla pagina di login, se non ha superato il numero max di tentativi altrimenti bloccato
@@ -122,8 +124,7 @@ class LoginController extends Controller
         $domain = Domain::where('locale',\App::getLocale())->first();
         $url = $website_config['protocol'].'://www.'.$domain->nome;
 
-        return ['result'=>1, 'msg' => trans('msg.credenziali_corrette'),'url' => $url];
-        //return redirect($this->redirectTo);
+        return redirect($this->redirectTo);
     }
 
     /**
@@ -148,7 +149,7 @@ class LoginController extends Controller
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        throw ValidationException::withMessages(['email' => [trans('auth.failed')],]);
+        return back()->with('error',trans('auth.failed'));
     }
 
     /**

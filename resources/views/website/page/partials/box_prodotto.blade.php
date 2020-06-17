@@ -2,7 +2,7 @@
     <div class="productBox">
         <div class="productImage clearfix">
             <a href="{{ $product->url() }}">
-                <img src="{{ $website_config['cs_small_dir'].$product->cover() }}" alt="{{$seo->alt ?? ''}}">
+                <img src="{{ $chess_domain.$website_config['ital_small_dir'].$product->cover() }}" alt="{{$seo->alt ?? ''}}">
             </a>
         </div>
         <div class="productCaption clearfix">
@@ -17,24 +17,35 @@
                 </div>
             </a>
             <div class="fjalla prezzo" >
-                @if($product->availability_id == 4)
-                    @lang('msg.su_ordinazione')
-                @else
-                    @if($product->is_scontato())
-                        <span class="FullProdPrice">@money($product->prezzo)</span>
-                        &nbsp;&nbsp;
-                        <span>@money($product->prezzo_scontato)</span>
+                @if(Auth::guard('website')->check())
+                    @if($product->availability_id == 4)
+                        @lang('msg.su_ordinazione')
                     @else
-                        <span>@money($product->prezzo)</span>
+                        @if(Auth::user()->vede_p_fabbrica)
+                            <span class="p_ital p_fabbrica" >
+                                Prezzo Fabbrica: @money($product->prezzo_fabbrica)
+                            </span>
+                        @endif
+                        @if(Auth::user()->vede_p_vendita)
+                            <span class="p_ital p_vendita" >
+                                Prezzo Vendita: @money($product->prezzo)
+                            </span>
+                        @endif
+                        @if(Auth::user()->vede_p_netto)
+                            <span class="p_ital p_netto" >
+                                Prezzo Netto: @money($product->prezzo_netto(Auth::user()))
+                            </span>
+                        @endif
                     @endif
                 @endif
+
             </div>
             <div class="prodDescrizione">
                 <strong>{{ $product->{'desc_'.app()->getLocale()} }}</strong>
             </div>
 
             <i>@lang('msg.codice_prodotto'): {{ $product->codice }}</i>
-            <a href="{{ $product->url() }}" class="dettagli" >
+            <a href="{{ url(app()->getLocale().'/prodotto',['id'=> encrypt($product->id)]) }}" class="dettagli" >
                 <i class="fa fa-search"></i> @lang('msg.dettagli_prodotto')
             </a>
         </div>

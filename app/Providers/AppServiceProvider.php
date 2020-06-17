@@ -52,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
         //funzione custom per formattare il prezzo
         \Blade::directive('money', function ($amount)
         {
-            return "<?php echo '€' . number_format($amount, 2,',','.'); ?>";
+            return "<?php echo '€ ' . number_format($amount, 2,',','.'); ?>";
         });
 
         //la configurazione del sito web
@@ -74,6 +74,10 @@ class AppServiceProvider extends ServiceProvider
         //i domini/alias del sito web
         $domains = Domain::all();
         view()->share('domains',$domains);
+
+        //dominio delle foto
+        view()->share('chess_domain','https://www.chess-store.it');
+        view()->share('chess_domain','https://www.inyourlifetest.com');
     }
 
     protected function getWebsiteConfig()

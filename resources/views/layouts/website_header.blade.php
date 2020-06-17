@@ -8,6 +8,16 @@
                 <div class="col-md-6 hidden-sm hidden-xs"></div>
                 <div class="col-md-6 col-xs-12">
                     <ul class="list-inline pull-right">
+
+                        <!-- MENU USER O GUEST -->
+                        @if(Auth::guard('website')->check())
+                            @include('layouts.website_auth_menu')
+                        @else
+                            @include('layouts.website_guest_menu')
+                        @endif
+                        <!-- -->
+
+                        <!-- Menu Lingue -->
                         @if(app()->getLocale() == 'it')
                             <li><span><a href="javascript:void(0)" style="background-color: #cdc8c6;">IT</a><small>
 						    | </small><a href="https://www.italfama.it/en/index" style="background-color: #666;">EN</a></span></li>
@@ -15,6 +25,8 @@
                             <li><span><a href="https://www.italfama.it" style="background-color: #666;">IT</a><small>
 						    | </small><a href="javascript:void(0)" style="background-color: #cdc8c6;">EN</a></span></li>
                         @endif
+                        <!-- -->
+
                     </ul>
                 </div>
             </div>

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Password o Uername errati.',
+    'failed' => 'Password o Email errati.',
     'throttle' => 'Troppi tentativi di accesso. Ritenta fra :seconds secondi.',
 
 ];

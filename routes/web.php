@@ -12,6 +12,8 @@ Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'mid
     Route::get('/area_riservata', 'Website\PageController@area_riservata');
     Route::get('/categoria/{id}', 'Website\PageController@categoryPage');
     Route::get('/macrocategoria/{id}', 'Website\PageController@macrocategoryPage');
+    Route::get('/prodotto/{id}', 'Website\PageController@productPage');
+    Route::get('/pairing/{id}', 'Website\PageController@pairingPage');
     Route::get('/tutti_i_prodotti', 'Website\PageController@tutti_i_prodotti');
     Route::post('/ricerca','Website\PageController@ricerca');
 

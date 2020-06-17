@@ -31,7 +31,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Model\Website\User::class,
+            'model' => App\Model\Website\ItalUser::class,
         ],
 
         // 'users' => [
