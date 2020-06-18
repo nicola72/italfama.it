@@ -25,7 +25,7 @@
     <div class="container">
         <div class="row" style="margin-top:10px;">
             <div class="pull-right">
-                <a href="/" class="fjalla btn btn-default">Back to Shop</a>
+                <a href="/" class="fjalla btn btn-default" style="padding:10px 20px;">@lang('msg.torna_allo_shop')</a>
             </div>
         </div>
         <div class="row">
@@ -45,15 +45,19 @@
 
                     <tr>
                         <td>
-                            <a href="{{ $website_config['cs_big_dir'].$cart->product->cover() }}" class="item-img galleria-item">
-                                <img src="{{ $website_config['cs_small_dir'].$cart->product->cover() }}" alt="" class="img-carrello" />
+                            <a href="{{ $chess_domain.$website_config['ital_big_dir'].$cart->product->cover() }}" class="item-img galleria-item">
+                                <img src="{{ $chess_domain.$website_config['ital_small_dir'].$cart->product->cover() }}" alt="" class="img-carrello" />
                             </a>
                         </td>
                         <td>
-                            <a href="{{ $cart->product->url() }}">{{ $cart->product->codice }}</a>
+                            <a href="{{url(app()->getLocale().'/prodotto',['id'=>encrypt($cart->product->id)])}}">
+                                {{ $cart->product->codice }}
+                            </a>
                         </td>
                         <td class="hidden-xs">
-                            <a href="{{ $cart->product->url() }}">{{ $cart->product->{'nome_'.app()->getLocale()} }}</a>
+                            <a href="{{url(app()->getLocale().'/prodotto',['id'=>encrypt($cart->product->id)])}}">
+                                {{ $cart->product->{'nome_'.app()->getLocale()} }}
+                            </a>
                         </td>
                         <td>
                             <input type="text" name="qta" value="{{ $cart->qta }}" class="center" data-idrow="{{ $cart->id }}" style="width:30px;">
@@ -62,7 +66,7 @@
                             </a>
                         </td>
                         <td>
-                            @money($cart->product->prezzo_vendita() * $cart->qta)
+                            @money($cart->product->prezzo_netto(Auth::user()) * $cart->qta)
                         </td>
                         <td>
                             <a href="{{ url(app()->getLocale().'/cart/destroy',$cart->id) }}">
@@ -73,43 +77,18 @@
                     @endforeach
                 </table>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                @if(!session()->has('coupon'))
-                <div class="row">
-                    <div class="col-md-5" style="line-height: 40px;font-size:120%; font-weight:bold;">@lang('msg.hai_un_coupon_sconto')</div>
-                    <div class="col-md-4" style="line-height: 40px;">
-                        <input class="form-control" type="text" name="coupon" id="coupon" style="margin:3px 15px 0 15px;">
-                    </div>
-                    <div class="col-md-3" style="line-height: 40px;">
-                        <a class="fjalla btn btn-default" style="" href="javascript:void(0);" onclick="couponRedeem('{{app()->getLocale()}}');">
-                            @lang('msg.riscattalo_ora')
-                        </a>
-                    </div>
-                </div>
-                @endif
+            <div class="col-md-12 text-right">
+                <span class="text-uppercase" style="font-size:20px;font-weight: bold">@lang('msg.totale') @money($importo_carrello)</span>
             </div>
-
         </div>
         <br />
-        <!-- Se il carrello supera il massimo peso -->
-        @if($peso_carrello > 1000)
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="order-failed">@lang('msg.troppo_peso_per_procedere') <a href="mailto:customerservice@chess-store.it" style="color:#840025;">Customer Service</a></div>
-                    <br><br>
-                </div>
+
+        <div class="row" style="padding-top:30px;padding-bottom:50px;">
+            <div class="col-md-12 text-right">
+                <a href="{{url(app()->getLocale(),'/cart/checkout')}}" class="btn btn-default" style="padding:20px 30px">Evadi Ordine</a>
             </div>
-        @else
-            <div class="row" style="padding-top:30px;">
-                <div class="col-md-12">
-                    <h3>@lang('msg.dettagli_per_spedizione_e_pagamento')</h3>
-                    @include('website.form.form_carrello')
-                </div>
-            </div>
-        @endif
         </div>
+    </div>
     @endif
 
 @endsection

@@ -110,5 +110,7 @@ return[
     'parola_chiave' => 'Parola chiave',
     'materiale' => 'Materiale',
     'tutti_i_prodotti' => 'Tutti i prodotti',
+    'devi_effetture_il_login_prima' => 'devi prima effettuare il login per inserire i prodotti nel carrello',
+    'torna_allo_shop' => 'torna allo shop',
 
 ];

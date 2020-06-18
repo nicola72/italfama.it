@@ -35,6 +35,14 @@ body, html{
 	
 }
 
+.cursor{
+	cursor: pointer;
+}
+
+.pl-15{
+	padding-left:15px;
+}
+
 .cat-item img{
 	max-height:300px;
 	display:block;

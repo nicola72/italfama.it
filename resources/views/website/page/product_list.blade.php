@@ -1,11 +1,11 @@
 @extends('layouts.website')
 @section('content')
-    <section class="lightSection clearfix pageHeader">
+    <section class="lightSection clearfix pageHeader" style="background-color: #cdc8c6;">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="page-title">
-                        <h2 class="fjalla">{{ $titolo }}</h2>
+                        <h2 class="fjalla" style="color: #6f2412;">{{ $titolo }}</h2>
                     </div>
                 </div>
             </div>
@@ -20,12 +20,7 @@
                 <!-- COLONNA A SINISTRA -->
                 <div class="col-md-3 col-sm-12 sideBar ">
 
-                    <!-- ORDINAMENTO -->
-                    <div class="panel panel-default" style="padding-bottom:20px;">
-                        <div class="panel-heading fjalla" style="font-weight:100; background-color:#eee; color:#666;">@lang('msg.ordina_per'):</div>
-                        @include('website.form.form_ordinamento')
-                    </div>
-                    <!-- -->
+
 
                     <!-- FILTRI -->
                     @if($pairings)

@@ -110,4 +110,6 @@ return[
     'parola_chiave' => 'Keyword',
     'materiale' => 'Material',
     'tutti_i_prodotti' => 'All the items',
+    'devi_effetture_il_login_prima' => 'you must first login to put the products in the cart',
+    'torna_allo_shop' => 'back to shop',
 ];

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Mail\Contact;
-use App\Model\Cart;
+use App\Model\ItalCart;
 use App\Model\Category;
 use App\Model\Domain;
 use App\Model\File;
@@ -14,11 +14,8 @@ use App\Model\Page;
 use App\Model\Pairing;
 use App\Model\Product;
 use App\Model\Review;
-use App\Model\Seo;
-use App\Model\Slider;
 use App\Model\Style;
 use Illuminate\Http\Request;
-use App\Model\Url;
 use App\Http\Controllers\Controller;
 use App\Service\GoogleRecaptcha;
 use Illuminate\Pagination\Paginator;
@@ -762,15 +759,8 @@ class PageController extends Controller
 
     private function getCarts()
     {
-        if(\Auth::check())
-        {
-            $user = \Auth::getUser();
-            $carts = Cart::where('user_id',$user->id)->get();
-        }
-        else
-        {
-            $carts = Cart::where('session_id',session()->getId())->get();
-        }
+        $user = \Auth::user();
+        $carts = ItalCart::where('user_id',$user->id)->get();
         return $carts;
     }
 }

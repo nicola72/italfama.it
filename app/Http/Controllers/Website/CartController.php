@@ -11,6 +11,7 @@ use App\Model\Material;
 use App\Model\Newsitem;
 use App\Model\Page;
 use App\Model\Pairing;
+use App\Model\Product;
 use App\Model\Review;
 use App\Model\Style;
 use Illuminate\Http\Request;
@@ -29,14 +30,13 @@ class CartController extends Controller
 
     public function index(Request $request)
     {
-        $carts = $this->getCarts();
-
         if(!\Auth::check())
         {
             return redirect('/');
         }
 
         $user = \Auth::user();
+        $carts = ItalCart::where('user_id',$user->id)->get();
 
         $importo_carrello = 0;
         foreach($carts as $cart)
@@ -88,24 +88,6 @@ class CartController extends Controller
         $spedizione['citta_nascita'] = $request->post('citta_nascita');
 
 
-        $country_id = $request->post('nazione');
-        $spedizione['nazione'] = $country_id;
-
-        $country = Country::find($country_id);
-
-        $pagamento = $request->post('pagamento');
-        $spedizione['pagamento'] = $pagamento;
-
-        $peso_carrello = \Session::get('preso_carrello');
-
-        $esenzione_iva = EsenzioneIva::get($country);
-        $spedizione['esenzione_iva'] = $esenzione_iva;
-
-        $spese_pagamento = ($pagamento == 'contrassegno') ? 9 : 0;
-        $spedizione['spese_pagamento'] = $spese_pagamento;
-
-        $confezione_regalo = array_key_exists('regalo', $request->all()) ? 1 : 0;
-        $spedizione['confezione_regalo'] = $confezione_regalo;
 
         $carts = $this->getCarts();
 
@@ -249,7 +231,7 @@ class CartController extends Controller
         $cart_id = $request->query('id');
         $qta = $request->query('qta');
 
-        $cart = Cart::find($cart_id);
+        $cart = ItalCart::find($cart_id);
         if(!$cart)
         {
             return ['result' => 0, 'msg'=> trans('msg.errore')];
@@ -274,7 +256,7 @@ class CartController extends Controller
 
     public function destroy(Request $request)
     {
-        $cart = Cart::find($request->id);
+        $cart = ItalCart::find($request->id);
         $cart->delete();
 
         return back()->with('success',trans('msg.prodotto_eliminato_con_successo'));
@@ -282,6 +264,10 @@ class CartController extends Controller
 
     public function addproduct(Request $request)
     {
+        if(!\Auth::check())
+        {
+            return ['result' => 0,'msg' => trans('msg.devi_effetture_il_login_prima')];
+        }
         $id = $request->id;
 
         $product = Product::find($id);
@@ -295,7 +281,7 @@ class CartController extends Controller
         $qta = 1; //la quantità è sempre 1
 
         //controllo che il prodotto non sia già nel carrello
-        $cart = Cart::where('product_id',$product->id)->where('session_id',session()->getId())->first();
+        $cart = ItalCart::where('product_id',$product->id)->where('user_id',\Auth::user()->id)->first();
 
         //se già nel carrello
         if($cart)
@@ -309,10 +295,6 @@ class CartController extends Controller
             try{
 
                 $cart->qta = $cart->qta + 1;
-                if(\Auth::user())
-                {
-                    $cart->user_id = \Auth::user()->id;
-                }
                 $cart->save();
             }
             catch(\Exception $e){
@@ -331,14 +313,11 @@ class CartController extends Controller
 
             try{
 
-                $cart = new Cart();
+                $cart = new ItalCart();
                 $cart->product_id = $product->id;
                 $cart->session_id = session()->getId();
                 $cart->qta = $qta;
-                if(\Auth::user())
-                {
-                    $cart->user_id = \Auth::user()->id;
-                }
+                $cart->user_id = \Auth::user()->id;
                 $cart->save();
             }
             catch(\Exception $e){
@@ -351,17 +330,6 @@ class CartController extends Controller
         return ['result' => 1,'msg' => trans('msg.prodotto_aggiunto_al_carrello')];
     }
 
-    private function getCarts()
-    {
-        if(\Auth::check())
-        {
-            $user = \Auth::getUser();
-            $carts = Cart::where('user_id',$user->id)->get();
-        }
-        else
-        {
-            $carts = Cart::where('session_id',session()->getId())->get();
-        }
-        return $carts;
-    }
+
+
 }
