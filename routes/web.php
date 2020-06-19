@@ -27,6 +27,7 @@ Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'mid
 
     Route::get('/cart','Website\CartController@index');
     Route::get('/cart/addproduct/{id}','Website\CartController@addproduct');
+    Route::get('/cart/addpairing/{id}','Website\CartController@addpairing');
     Route::get('/cart/update','Website\CartController@update');
     Route::get('/cart/destroy/{id}','Website\CartController@destroy');
     Route::post('/cart/resume','Website\CartController@resume')->name('riepilogo_ordine');

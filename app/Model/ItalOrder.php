@@ -10,19 +10,11 @@ class ItalOrder extends Model
 
     protected $fillable = [
         'user_id',
-        'spese_spedizione',
-        'spese_conf_regalo',
-        'spese_contrassegno',
         'sconto',
-        'modalita_pagamento',
-        'stato_pagamento',
-        'idtranspag',
         'imponibile',
         'iva',
         'sconto_iva',
         'importo',
-        'data_nascita',
-        'luogo_nascita',
         'locale'
     ];
 

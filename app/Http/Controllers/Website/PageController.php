@@ -759,8 +759,13 @@ class PageController extends Controller
 
     private function getCarts()
     {
-        $user = \Auth::user();
-        $carts = ItalCart::where('user_id',$user->id)->get();
-        return $carts;
+        if(\Auth::check())
+        {
+            $user = \Auth::user();
+            $carts = ItalCart::where('user_id',$user->id)->get();
+            return $carts;
+        }
+
+        return [];
     }
 }

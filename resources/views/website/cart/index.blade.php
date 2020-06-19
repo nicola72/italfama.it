@@ -77,15 +77,53 @@
                     @endforeach
                 </table>
             </div>
-            <div class="col-md-12 text-right">
-                <span class="text-uppercase" style="font-size:20px;font-weight: bold">@lang('msg.totale') @money($importo_carrello)</span>
+            <div class="col-md-4 col-md-offset-8">
+                <table class="table">
+                    <tr>
+                        <td style="font-size:16px;font-weight: bold">
+                            @lang('msg.importo_carrello')
+                        </td>
+                        <td style="font-size:16px;font-weight: bold;text-align: right">
+                            @money($importo_carrello)
+                        </td>
+                    </tr>
+                    @if(intval($sconto_importo) != 0)
+                        <tr>
+                            <td style="font-size:16px;font-weight: bold">
+                                @lang('msg.sconto')
+                            </td>
+                            <td style="font-size:16px;font-weight: bold;text-align: right">
+                                @money($sconto_importo)
+                            </td>
+                        </tr>
+                    @endif
+                    @if(intval($sconto_bonifico) != 0)
+                        <tr>
+                            <td style="font-size:16px;font-weight: bold">
+                                @lang('msg.sconto_bonifico')
+                            </td>
+                            <td style="font-size:16px;font-weight: bold;text-align: right">
+                                @money($sconto_bonifico)
+                            </td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <td style="font-size:20px;font-weight: bold">
+                            @lang('msg.totale')
+                        </td>
+                        <td style="font-size:20px;font-weight: bold;text-align: right">
+                            @money($importo_totale)
+                        </td>
+                    </tr>
+                </table>
             </div>
+
         </div>
         <br />
 
         <div class="row" style="padding-top:30px;padding-bottom:50px;">
             <div class="col-md-12 text-right">
-                <a href="{{url(app()->getLocale(),'/cart/checkout')}}" class="btn btn-default" style="padding:20px 30px">Evadi Ordine</a>
+                <a href="{{url(app()->getLocale().'/cart/checkout')}}" class="btn btn-default" style="padding:20px 30px">Evadi Ordine</a>
             </div>
         </div>
     </div>

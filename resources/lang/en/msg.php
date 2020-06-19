@@ -112,4 +112,6 @@ return[
     'tutti_i_prodotti' => 'All the items',
     'devi_effetture_il_login_prima' => 'you must first login to put the products in the cart',
     'torna_allo_shop' => 'back to shop',
+    'sconto' => 'Discount brackets',
+    'sconto_bonifico' => 'Early transfer discount',
 ];
