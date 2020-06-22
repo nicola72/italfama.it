@@ -30,8 +30,8 @@ Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'mid
     Route::get('/cart/addpairing/{id}','Website\CartController@addpairing');
     Route::get('/cart/update','Website\CartController@update');
     Route::get('/cart/destroy/{id}','Website\CartController@destroy');
-    Route::post('/cart/resume','Website\CartController@resume')->name('riepilogo_ordine');
-    Route::post('/cart/submit','Website\CartController@submit');
+    Route::get('/cart/checkout','Website\CartController@checkout');
+    Route::get('/cart/risposta_checkout/{id}','Website\CartController@risposta_checkout')->name('website.risposta_checkout');
 
     Route::post('/invia_formcontatti','Website\PageController@invia_formcontatti')->name('invia_formcontatti');
     Route::get('/{slug}','Website\PageController@page');

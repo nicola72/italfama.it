@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             @if ($message = Session::get('success'))
-                <div class="alert alert-success alert-block">
+                <div class="alert alert-success alert-block" style="margin-top:20px;">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ $message }}</strong>    </div>
 
@@ -10,7 +10,7 @@
 
 
             @if ($message = Session::get('error'))
-                <div class="alert alert-danger alert-block">
+                <div class="alert alert-danger alert-block" style="margin-top:20px;">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ $message }}</strong>
                 </div>
@@ -18,7 +18,7 @@
 
 
             @if ($message = Session::get('warning'))
-                <div class="alert alert-warning alert-block">
+                <div class="alert alert-warning alert-block" style="margin-top:20px;">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ $message }}</strong>
                 </div>
@@ -26,7 +26,7 @@
 
 
             @if ($message = Session::get('info'))
-                <div class="alert alert-info alert-block">
+                <div class="alert alert-info alert-block" style="margin-top:20px;">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ $message }}</strong>
                 </div>
@@ -34,7 +34,7 @@
 
 
             @if ($errors->any())
-                <div class="alert alert-danger">
+                <div class="alert alert-danger" style="margin-top:20px;">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     Please check the form below for errors
                 </div>

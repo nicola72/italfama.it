@@ -31,7 +31,7 @@ class Contact extends Mailable
     public function build()
     {
         $config = \Config::get('website_config');
-        $sito = $config['sito'];
+        $sito = 'italfama.it';
 
         $params = [
             'nome' => $this->data['nome'],

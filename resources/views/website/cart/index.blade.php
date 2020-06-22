@@ -13,6 +13,8 @@
         </div>
     </section>
 
+    @include('layouts.website_flash-message')
+
     @if(!$carts)
     <div class="container">
         <div class="row">

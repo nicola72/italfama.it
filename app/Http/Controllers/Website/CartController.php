@@ -7,6 +7,7 @@ use App\Model\Category;
 use App\Model\Domain;
 use App\Model\File;
 use App\Model\ItalOrder;
+use App\Model\ItalOrderDetail;
 use App\Model\Macrocategory;
 use App\Model\Material;
 use App\Model\Newsitem;
@@ -254,7 +255,7 @@ class CartController extends Controller
     {
         if(!\Auth::check())
         {
-            return ['result' => 0,'msg' => trans('msg.devi_effetture_il_login_prima')];
+            return redirect()->route('website.home');
         }
 
         $user = \Auth::user();
@@ -266,17 +267,78 @@ class CartController extends Controller
             $importo_carrello+= ($cart->product->prezzo_netto($user) * $cart->qta);
         }
 
+        $sconto_importo = $this->sconto_importo($importo_carrello);
+
+        $importo_totale = $importo_carrello - $sconto_importo;
+
+        $sconto_bonifico = 0;
+        if(\Auth::user()->vede_sconto_bonifico)
+        {
+            $sconto_bonifico = ($importo_totale/100) * 3;
+        }
+        $importo_totale = $importo_totale - $sconto_bonifico;
+
+        $website_config = \Config::get('website_config');
+        $iva = ($importo_totale / 100)* $website_config['iva'];
+
         try{
 
             $order = new ItalOrder();
-            $order->product_id = $product->id;
+            $order->user_id = \Auth::user()->id;
+            $order->sconto = $sconto_importo;
+            $order->imponibile = $importo_totale;
+            $order->iva = $iva;
+            $order->importo = $importo_totale + $iva;
 
             $order->save();
+
+            foreach($carts as $cart)
+            {
+                $orderDetail = new ItalOrderDetail();
+                $orderDetail->order_id = $order->id;
+                $orderDetail->product_id = $cart->product_id;
+                $orderDetail->codice = $cart->product->codice;
+                $orderDetail->nome_prodotto = $cart->product->{'nome_'.\App::getLocale()};
+                $orderDetail->qta = $cart->qta;
+                $orderDetail->prezzo = $cart->product->prezzo_netto(\Auth::user());
+                $orderDetail->totale = $cart->product->prezzo_netto(\Auth::user()) * $cart->qta;
+                $orderDetail->save();
+            }
         }
         catch(\Exception $e){
 
-            return ['result' => 0,'msg' => $e->getMessage()];
+            if($website_config['in_sviluppo'])
+            {
+                return back()->with('error',$e->getMessage());
+            }
+            return back()->with('error',trans('msg.errore_evasione_ordine'));
         }
+
+
+        Session::flash('success',trans('msg.evasione_avvenuta_con_successo'));
+        return redirect()->route('website.risposta_checkout',['locale'=>\App::getLocale(),'id'=>encrypt($order->id)]);
+    }
+
+    public function risposta_checkout(Request $request)
+    {
+        if(!\Auth::check())
+        {
+            return redirect()->route('website.home');
+        }
+
+        $order_id = decrypt($request->id);
+        $order = ItalOrder::find($order_id);
+
+        $user = \Auth::user();
+        $carts = ItalCart::where('user_id',$user->id)->get();
+
+        $params = [
+            'order' => $order,
+            'user' => $user,
+            'carts' => $carts,
+        ];
+
+        return view('website.cart.risposta_checkout',$params);
     }
 
     private function sconto_importo($importo)

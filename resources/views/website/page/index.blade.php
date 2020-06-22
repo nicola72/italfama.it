@@ -1,6 +1,8 @@
 @extends('layouts.website')
 @section('content')
 
+    @include('layouts.website_flash-message')
+
     <!-- form di RICERCA -->
     @include('website.page.partials.search_bar')
     <!-- -->

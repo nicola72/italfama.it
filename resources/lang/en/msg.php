@@ -114,4 +114,8 @@ return[
     'torna_allo_shop' => 'back to shop',
     'sconto' => 'Discount brackets',
     'sconto_bonifico' => 'Early transfer discount',
+    'errore_evasione_ordine' => 'Error! Unable to proceed with order evasion',
+    'evasione_avvenuta_con_successo' => 'The order was successfully processed!',
+    'checkout_successo' => 'Thank you for purchasing on Italfama. <br> We have sent you an email with the order details. <br> By clicking on the link below you can print it',
+    'stampa' => 'Print',
 ];

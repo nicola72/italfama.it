@@ -13,7 +13,6 @@ class ItalOrder extends Model
         'sconto',
         'imponibile',
         'iva',
-        'sconto_iva',
         'importo',
         'locale'
     ];

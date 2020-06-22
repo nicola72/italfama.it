@@ -12,6 +12,8 @@
         </div>
     </section>
 
+    @include('layouts.website_flash-message')
+
     <!-- sezione LISTA PRODOTTI -->
     <section class="mainContent clearfix productsContent">
         <div class="container">

@@ -404,12 +404,10 @@ class PageController extends Controller
 
     protected function azienda(Request $request,$url)
     {
-        $seo = $url->seo;
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
 
         $params = [
             'carts' => $this->getCarts(),
-            'seo' => $seo,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null, //paramtero necessario per stabilire il collapse del menu a sinistra
             'function' => __FUNCTION__ //visualizzato nei meta tag della header
@@ -419,12 +417,10 @@ class PageController extends Controller
 
     protected function dove_siamo(Request $request,$url)
     {
-        $seo = $url->seo;
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
 
         $params = [
             'carts' => $this->getCarts(),
-            'seo' => $seo,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null, //paramtero necessario per stabilire il collapse del menu a sinistra
             'function' => __FUNCTION__ //visualizzato nei meta tag della header
@@ -434,12 +430,10 @@ class PageController extends Controller
 
     protected function contatti(Request $request,$url)
     {
-        $seo = $url->seo;
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
 
         $params = [
             'carts' => $this->getCarts(),
-            'seo' => $seo,
             'macrocategorie' => $macrocategorie,
             'form_action' => route('invia_formcontatti',app()->getLocale()),
             'form_name' => 'form_contatti',
@@ -447,6 +441,17 @@ class PageController extends Controller
             'function' => __FUNCTION__ //visualizzato nei meta tag della header
         ];
         return view('website.page.contatti',$params);
+    }
+
+    public function area_riservata()
+    {
+        if(!\Auth::check())
+        {
+            return redirect()->route('website.home');
+        }
+
+
+
     }
 
     protected function recensioni(Request $request,$url)

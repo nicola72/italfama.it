@@ -114,5 +114,8 @@ return[
     'torna_allo_shop' => 'torna allo shop',
     'sconto' => 'Sconto (scaglioni)',
     'sconto_bonifico' => 'Sconto bonifico anticipato',
-
+    'errore_evasione_ordine' => 'Errore! Impossibile procedere con l\'evasione dell\'ordine',
+    'evasione_avvenuta_con_successo' => 'L\'ordine è stato evaso con con successo!',
+    'checkout_successo' => 'Grazie per avere acquistato su Italfama.<br> Le abbiamo inviato un\'email con i dettagli dell\'ordine.<br>Cliccando sul link sottostante lo puoi stampare',
+    'stampa' => 'Stampa',
 ];

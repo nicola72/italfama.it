@@ -55,7 +55,6 @@
         <div class="main-wrapper">
 
         @include('layouts.website_header')
-        @include('layouts.website_flash-message')
 
         @yield('content')
 
