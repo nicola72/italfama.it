@@ -70,7 +70,7 @@ class Macrocategory extends Model implements Sortable
 
     public function pairings_for_list()
     {
-        $pairings = $this->hasManyThrough('App\Model\Pairing','App\Model\Category')->where('visibile',1)->get();
+        $pairings = $this->hasManyThrough('App\Model\Pairing','App\Model\Category')->where('visibile',1)->where('italfama',1)->get();
 
         if($pairings)
         {

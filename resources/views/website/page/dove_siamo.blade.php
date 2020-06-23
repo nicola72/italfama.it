@@ -1,6 +1,6 @@
 @extends('layouts.website')
 @section('content')
-    <section class="lightSection clearfix pageHeader">
+    <section class="lightSection clearfix pageHeader" style="background-color: #cdc8c6;">
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
@@ -14,7 +14,7 @@
     </section>
     <section class="mainContent clearfix productsContent">
         <div class="container">
-            <div class="row">
+            <div class="row" style="padding-top:40px;">
 
                 <!-- COLONNA A SINISTRA -->
                 <div class="col-md-3 col-sm-12 col-xs-12 sideBar ">

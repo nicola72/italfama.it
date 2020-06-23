@@ -14,7 +14,7 @@ Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'mid
     Route::get('/macrocategoria/{id}', 'Website\PageController@macrocategoryPage');
     Route::get('/prodotto/{id}', 'Website\PageController@productPage');
     Route::get('/pairing/{id}', 'Website\PageController@pairingPage');
-    Route::get('/tutti_i_prodotti', 'Website\PageController@tutti_i_prodotti');
+    Route::get('/tutti_prodotti', 'Website\PageController@tutti_prodotti');
     Route::post('/ricerca','Website\PageController@ricerca');
 
     //per L'autorizzazione
@@ -37,7 +37,6 @@ Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'mid
     Route::get('/order/print/{id}','Website\OrderController@print');
 
     Route::post('/invia_formcontatti','Website\PageController@invia_formcontatti')->name('invia_formcontatti');
-    Route::get('/{slug}','Website\PageController@page');
 
 });
 

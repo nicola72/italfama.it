@@ -21,7 +21,7 @@
                         @if(app()->getLocale() == 'it')
                             <li>
                                 <span><a href="javascript:void(0)" style="background-color: #cdc8c6;">IT</a><small>
-						        | </small><a href="https://www.italfama.it/en/index" style="background-color: #666;">EN</a></span>
+						        | </small><a href="https://www.inyourlifeweb.com/en/home" style="background-color: #666;">EN</a></span>
                             </li>
                         @else
                             <li>

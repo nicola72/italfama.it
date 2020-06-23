@@ -12,7 +12,7 @@
                 <div class="col-xs-6">
                     <ol class="breadcrumb pull-right">
                         <li><a href="/">Home</a></li>
-                        <li><a href="#" id="name_category">{{ $titolo }}</a></li>
+                        <li>{{ $titolo }}</li>
                     </ol>
                 </div>
             </div>
@@ -31,19 +31,8 @@
 
                     <div class="panel panel-default hidden-xs hidden-sm">
                         <!-- menu prodotti -->
-                    @include('layouts.website_menu_prodotti')
-                    <!-- fine menu prodotti -->
-
-                        <!-- box facebook -->
-                    @include('layouts.website_box_facebook')
-                    <!-- -->
-
-                        <!-- box spedizione -->
-                    @if(app()->getLocale() == 'it')
-                        @include('layouts.website_box_spedizione')
-                    @endif
-                    <!-- -->
-
+                        @include('layouts.website_menu_prodotti')
+                        <!-- fine menu prodotti -->
                     </div>
                 </div>
                 <!-- FINE COLONNA SINISTRA -->
@@ -51,23 +40,19 @@
                 <!-- MAIN PAGE -->
                 <div class="col-md-9 col-sm-12 sideBar ">
 
-                    <div class="categoria-description">{{ $descrizione_categoria }}</div>
-
-                    <div class="fjalla" style="text-align:left; font-size:130%;padding-bottom:20px;">
-                        @lang('msg.ci_sono_n_prodotti_in_questa_categoria',['number'=>$totali])
-                    </div>
-
+                    @if(count($products) > 0)
                     <div id="product_list">
 
-                    @foreach($list as $item)
-                        @if($item['type'] == 'product')
-                            @include('website.page.partials.box_prodotto',['product'=>$item['object']])
-                        @elseif($item['type'] == 'pairing')
-                            @include('website.page.partials.box_abbinamento',['pairing'=>$item['object']])
-                        @endif
-                    @endforeach
+                        @foreach($products as $product)
+                            @include('website.page.partials.box_prodotto')
+                        @endforeach
 
                     </div>
+                    @else
+                        <div id="product_list">
+                            Nessun risultato per questa ricerca
+                        </div>
+                    @endif
                 </div>
                 <!-- FINE MAIN PAGE -->
 

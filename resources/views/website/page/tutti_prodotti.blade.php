@@ -29,27 +29,11 @@
                 <!-- COLONNA A SINISTRA -->
                 <div class="col-md-3 col-sm-12 sideBar ">
 
-                    <!-- ORDINAMENTO -->
-                    <div class="panel panel-default" style="padding-bottom:20px;">
-                        <div class="panel-heading fjalla" style="font-weight:100; background-color:#eee; color:#666;">@lang('msg.ordina_per'):</div>
-                        @include('website.form.form_ordinamento')
-                    </div>
-                    <!-- -->
-
                     <div class="panel panel-default hidden-xs hidden-sm">
-                        <!-- menu prodotti -->
+                    <!-- menu prodotti -->
                     @include('layouts.website_menu_prodotti')
                     <!-- fine menu prodotti -->
 
-                        <!-- box facebook -->
-                    @include('layouts.website_box_facebook')
-                    <!-- -->
-
-                        <!-- box spedizione -->
-                    @if(app()->getLocale() == 'it')
-                        @include('layouts.website_box_spedizione')
-                    @endif
-                    <!-- -->
 
                     </div>
                 </div>

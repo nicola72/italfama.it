@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="form-group col-sm-12">
-                    <button id="submit_btn" type="submit" class="btn btn-default">@lang('msg.invia')</button>
+                    <button id="submit_btn" type="submit" class="btn btn-default" style="padding:8px 20px;">@lang('msg.invia')</button>
                     <span style="padding-top: 10px;font-size: 12px;display: block;">* @lang('msg.obbligatorio')</span>
                 </div>
             </div>

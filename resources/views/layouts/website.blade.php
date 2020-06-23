@@ -59,7 +59,6 @@
         @yield('content')
 
         </div>
-        @include('layouts.website_section')
         @include('layouts.website_footer')
         <!-- MODALE -->
         <div id="myModal" class="modal fade" role="dialog"></div>
@@ -77,6 +76,7 @@
         <script src="/assets/js/jquery.magnific-popup.min.js"></script>
         <script src="/assets/js/custom.js"></script>
         <script src="/assets/js/website.js"></script>
+        <script src="/assets/js/jquery.validate.js"></script>
         <script>
             $(document).ready(function() {
                 $('.galleria-item').magnificPopup(

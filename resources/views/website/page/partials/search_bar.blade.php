@@ -6,6 +6,7 @@
                     <span style="font-size: 80%;">@lang('msg.ricerca_avanzata')</span>
                 </h5>
                 <form style="margin-top: -40px;" action="{{ url(app()->getLocale().'/ricerca') }}" method="post">
+                    {{ csrf_field() }}
                     <div class="form-group col-sm-3 col-xs-12">
                         <label for="">@lang('msg.codice')</label>
                         <input type="text" name="codice" class="form-control" placeholder="" />

@@ -20,12 +20,12 @@
     <!-- -->
 
     <div style="clear: both;"></div>
-    <section class="mainContent clearfix hidden-md hidden-lg text-center" style="background-color: #cdc8c6; background-image: url(/img/foto_1.jpg); background-position: center top; background-repeat: no-repeat; min-height: 400px; background-size: cover;">
+    <section class="mainContent clearfix hidden-md hidden-lg text-center" style="background-color: #cdc8c6; background-image: url('/img/foto_1.jpg'); background-position: center top; background-repeat: no-repeat; min-height: 400px; background-size: cover;">
         <p class="playfair_titolo" style="padding-top: 20px; color: #fff; text-align: center; text-shadow: 1px 1px 5px #000;">
             @lang('msg.fabbrica_di_scacchi')
         </p>
     </section>
-    <section class="mainContent clearfix" style="background-image: url(/img/fondo_5.jpg); background-position: center center; background-repeat: no-repeat; background-size: cover;">
+    <section class="mainContent clearfix" style="background-image: url('/img/fondo_5.jpg'); background-position: center center; background-repeat: no-repeat; background-size: cover;">
 
         <div class="container">
             <div class="row">
@@ -42,7 +42,7 @@
             </div>
         </div>
     </section>
-    <section class="mainContent clearfix" style="background-image: url(/img/fondo_1.jpg); background-repeat: no-repeat; background-size: cover; background-position: top center;">
+    <section class="mainContent clearfix" style="background-image: url('/img/fondo_1.jpg'); background-repeat: no-repeat; background-size: cover; background-position: top center;">
 
         <div class="container">
             <div class="row">
@@ -68,7 +68,7 @@
                         <div class="slide">
                             <div class="clearfix">
                                 <div class="img-news-cont">
-                                    <img src="https://www.chess-store.it/file/news/small/{{$item->cover()}}" alt="" class="img_news">
+                                    <img src="{{$chess_domain}}/file/news/small/{{$item->cover()}}" alt="" class="img_news">
                                 </div>
                             </div>
                             <div class="productCaption clearfix">

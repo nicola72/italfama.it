@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Service\GoogleRecaptcha;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -31,8 +32,6 @@ class PageController extends Controller
 
     public function index(Request $request)
     {
-        \App::setLocale('it');
-
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
         $prodotti_novita = Product::where('visibile',1)->where('availability_id','!=',2)->where('novita',1)->get();
         $abbinamenti_novita = Pairing::where('visibile',1)->where('novita',1)->get();
@@ -57,6 +56,8 @@ class PageController extends Controller
 
     protected function macrocategoryPage(Request $request)
     {
+        //in questa pagina i prodotti verranno visualizzati tutti i prodotti/abbinamenti di una categoria principale
+
         $macrocategory = Macrocategory::find($request->id);
 
         return $this->catalogo($request,$macrocategory,$macrocategory);
@@ -64,6 +65,8 @@ class PageController extends Controller
 
     protected function categoryPage(Request $request)
     {
+        //in questa pagina i prodotti verranno visualizzati tutti i prodotti/abbinamenti di una categoria
+
         $category = Category::find($request->id);
         $macrocategory = Macrocategory::find($category->macrocategory_id);
 
@@ -207,79 +210,50 @@ class PageController extends Controller
 
     protected function ricerca(Request $request,$url)
     {
-        $seo = $url->seo;
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
 
-        $search = $request->get('searchterm',null);
+        $search_code = $request->get('codice');
+        $search_material = $request->get('materiale');
+        $search_word = $request->get('parola');
+
+        //stabilisco quale parola usare per la ricerca
+        $search = $search_code;
+        if($search_material != '') $search = $search_material;
+        if($search_word != '') $search = $search_word;
+
+
         if(strlen($search) < 4)
         {
             return back()->with('error',trans('msg.inserire_almeno_4_caratteri'));
         }
 
-        $catalogo = collect();
+        $products = Product::where('visibile',1)
+            ->where('availability_id','!=',2)
+            ->where(function ($query) use($search){
+                $query->where('products.nome_it','LIKE','%' . $search . '%')
+                    ->orWhere('products.desc_it','LIKE','%' . $search . '%')
+                    ->orWhere('products.codice','LIKE','%' . $search . '%');
+            })
+            ->where('italfama',1)
+            ->get();
 
-        foreach ($macrocategorie as $macro)
-        {
-            $products = $macro->products()->where('visibile',1)->where('availability_id','!=',2)->where('products.nome_'.\App::getLocale(),'LIKE','%' . $search . '%')->get();
-            if($products)
-            {
-                foreach ($products as $product)
-                {
-                    $product = Product::find($product->id_product);
-                    $prezzo_vendita = $product->prezzo_vendita();
-                    $elem = [
-                        'id'=> $product->id,
-                        'type'=> 'product',
-                        'prezzo'=> $prezzo_vendita,
-                        'nome' => $product->{'nome_'.\App::getLocale()},
-                        'object'=>$product
-                    ];
-                    $catalogo->push($elem);
-                }
-            }
-
-
-            $pairings = $macro->pairings()->where('visibile',1)->where('pairings.nome_'.\App::getLocale(),'LIKE','%' . $search . '%')->get();
-            if($pairings)
-            {
-                foreach ($pairings as $pairing)
-                {
-                    $product1 = Product::find($pairing->product1_id);
-                    $product2 = Product::find($pairing->product1_id);
-                    $prezzo_vendita = $product1->prezzo_vendita() + $product2->prezzo_vendita();
-                    $elem = [
-                        'id'=> $pairing->id,
-                        'type'=> 'pairing',
-                        'prezzo'=> $prezzo_vendita,
-                        'nome' => $pairing->{'nome_'.\App::getLocale()},
-                        'object'=>$pairing
-                    ];
-                    $catalogo->push($elem);
-                }
-            }
-        }
-
-        $totali = $catalogo->count();
-        $list = $catalogo->sortBy('prezzo');
+        $totali = $products->count();
 
         $params = [
             'carts' => $this->getCarts(),
-            'seo' => $seo,
             'macrocategory' => false,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null,
             'category' => false,
             'totali' => $totali,
             'titolo' => 'Ricerca per '.$search,
-            'products' => false,
+            'products' => $products,
             'pairings' => false,
             'ordinamento' => false,
-            'descrizione_categoria' => '',
             'styles' => false,
             'chess_materials' => false,
             'board_materials' => false,
             'filtro' => false,
-            'list' => $list,
             'function' => __FUNCTION__ //visualizzato nei meta tag della header
         ];
 
@@ -300,17 +274,21 @@ class PageController extends Controller
 
         foreach ($macrocategorie as $macro)
         {
-            $products = $macro->products()->where('visibile',1)->where('availability_id','!=',2)->get();
+            $products = $macro->products()->where('visibile',1)->where('italfama',1)->where('availability_id','!=',2)->get();
             if($products)
             {
                 foreach ($products as $product)
                 {
                     $product = Product::find($product->id_product);
-                    $prezzo_vendita = $product->prezzo_vendita();
+                    $prezzo = (\Auth::check()) ? $product->prezzo : false;
+                    $prezzo_netto = (\Auth::check()) ? $product->prezzo_netto(\Auth::user()) : false;
+                    $prezzo_fabbrica = (\Auth::check()) ? $product->prezzo_fabbrica : false;
                     $elem = [
                         'id'=> $product->id,
                         'type'=> 'product',
-                        'prezzo'=> $prezzo_vendita,
+                        'prezzo'=> $prezzo,
+                        'prezzo_netto' => $prezzo_netto,
+                        'prezzo_fabbrica' => $prezzo_fabbrica,
                         'nome' => $product->{'nome_'.\App::getLocale()},
                         'object'=>$product
                     ];
@@ -319,18 +297,22 @@ class PageController extends Controller
             }
 
 
-            $pairings = $macro->pairings()->where('visibile',1)->get();
+            $pairings = $macro->pairings()->where('visibile',1)->where('italfama',1)->get();
             if($pairings)
             {
                 foreach ($pairings as $pairing)
                 {
                     $product1 = Product::find($pairing->product1_id);
                     $product2 = Product::find($pairing->product1_id);
-                    $prezzo_vendita = $product1->prezzo_vendita() + $product2->prezzo_vendita();
+                    $prezzo = (\Auth::check()) ? ($product1->prezzo + $product2->prezzo) : false;
+                    $prezzo_netto = (\Auth::check()) ? ($product1->prezzo_netto(\Auth::user()) + $product2->prezzo_netto(\Auth::user())) : false;
+                    $prezzo_fabbrica = (\Auth::check()) ? ($product1->prezzo_fabbrica + $product2->prezzo_fabbrica) : false;
                     $elem = [
                         'id'=> $pairing->id,
                         'type'=> 'pairing',
-                        'prezzo'=> $prezzo_vendita,
+                        'prezzo'=> $prezzo,
+                        'prezzo_netto' => $prezzo_netto,
+                        'prezzo_fabbrica' => $prezzo_fabbrica,
                         'nome' => $pairing->{'nome_'.\App::getLocale()},
                         'object'=>$pairing
                     ];
@@ -628,7 +610,7 @@ class PageController extends Controller
             switch($tipo_filtro)
             {
                 case 'style':
-                    $totali = $model->pairings()->where('visibile',1)->where('style_id',$parametro_filtro)->count();
+                    $totali = $model->pairings()->where('visibile',1)->where('italfama',1)->where('style_id',$parametro_filtro)->count();
                     break;
                 case 'material_chess':
                     $totali = $model->pairings_for_list($tipo_filtro,$parametro_filtro)->count();
@@ -733,7 +715,7 @@ class PageController extends Controller
      */
     private function getTotalProducts($model)
     {
-        return $model->products()->where('visibile',1)->where('availability_id','!=',2)->count();
+        return $model->products()->where('visibile',1)->where('italfama',1)->where('availability_id','!=',2)->count();
     }
 
     private function getProducts($model,$ordinamento,$per_page)
@@ -743,6 +725,7 @@ class PageController extends Controller
             case 'prezzo|ASC':
                 $products = $model->products()
                     ->where('visibile',1)
+                    ->where('italfama',1)
                     ->where('availability_id','!=',2)
                     ->orderBy('minimal','ASC')
                     ->paginate($per_page);
@@ -750,6 +733,7 @@ class PageController extends Controller
             case 'prezzo|DESC':
                 $products = $model->products()
                     ->where('visibile',1)
+                    ->where('italfama',1)
                     ->where('availability_id','!=',2)
                     ->orderBy('minimal','DESC')
                     ->paginate($per_page);
@@ -758,6 +742,7 @@ class PageController extends Controller
                 $nome = 'nome_'.\App::getLocale();
                 $products = $model->products()
                     ->where('visibile',1)
+                    ->where('italfama',1)
                     ->where('availability_id','!=',2)
                     ->orderBy($nome,'ASC')
                     ->paginate($per_page);
@@ -765,6 +750,7 @@ class PageController extends Controller
             default:
                 $products = $model->products()
                     ->where('visibile',1)
+                    ->where('italfama',1)
                     ->where('availability_id','!=',2)
                     ->orderBy('minimal')
                     ->paginate($per_page);

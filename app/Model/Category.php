@@ -77,7 +77,7 @@ class Category extends Model implements Sortable
 
     public function pairings_for_list($tipo_filtro = false,$parametro_filtro = false)
     {
-        $pairings = $this->hasMany('App\Model\Pairing')->where('visibile',1)->get();
+        $pairings = $this->hasMany('App\Model\Pairing')->where('visibile',1)->where('italfama',1)->get();
 
         if($pairings)
         {
