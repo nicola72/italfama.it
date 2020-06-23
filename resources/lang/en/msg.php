@@ -118,4 +118,12 @@ return[
     'evasione_avvenuta_con_successo' => 'The order was successfully processed!',
     'checkout_successo' => 'Thank you for purchasing on Italfama. <br> We have sent you an email with the order details. <br> By clicking on the link below you can print it',
     'stampa' => 'Print',
+    'cataloghi' => 'Catalogs',
+    'impossibile_inviare_email_evasione' => 'Error! It was not possible to send the email for the order summary.',
+    'iva' => 'VAT',
+    'imponibile' => 'taxable',
+    'impossibile_effettuare_la_stampa' => 'Error! Unable to print.',
+    'non_hai_effettuato_nessun_ordine' => 'You have not placed any order.',
+    'ordine' => 'Order',
+    'data' => 'Data',
 ];

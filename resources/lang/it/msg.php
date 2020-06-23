@@ -118,4 +118,12 @@ return[
     'evasione_avvenuta_con_successo' => 'L\'ordine è stato evaso con con successo!',
     'checkout_successo' => 'Grazie per avere acquistato su Italfama.<br> Le abbiamo inviato un\'email con i dettagli dell\'ordine.<br>Cliccando sul link sottostante lo puoi stampare',
     'stampa' => 'Stampa',
+    'cataloghi' => 'Cataloghi',
+    'impossibile_inviare_email_evasione' => 'Errore! Non è stato possibile inviare l\'email per il riepilogo dell\'ordine.',
+    'iva' => 'IVA',
+    'imponibile' => 'imponibile',
+    'impossibile_effettuare_la_stampa' => 'Errore! Impossibile effettuare la stampa.',
+    'non_hai_effettuato_nessun_ordine' => 'Non hai effettuato nessun ordine.',
+    'ordine' => 'Ordine',
+    'data' => 'Del',
 ];

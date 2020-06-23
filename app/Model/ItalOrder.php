@@ -19,7 +19,7 @@ class ItalOrder extends Model
 
     public function orderDetails()
     {
-        return $this->hasMany('App\Model\OrderDetail');
+        return $this->hasMany('App\Model\ItalOrderDetail','order_id');
     }
 
     public function orderShipping()
@@ -29,6 +29,6 @@ class ItalOrder extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Model\Website\User');
+        return $this->belongsTo('App\Model\Website\ItalUser');
     }
 }

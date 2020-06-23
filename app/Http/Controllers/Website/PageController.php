@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Mail\Contact;
+use App\Model\Catalog;
 use App\Model\ItalCart;
 use App\Model\Category;
 use App\Model\Domain;
@@ -443,13 +444,23 @@ class PageController extends Controller
         return view('website.page.contatti',$params);
     }
 
-    public function area_riservata()
+    public function cataloghi()
     {
         if(!\Auth::check())
         {
             return redirect()->route('website.home');
         }
+        $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
+        $cataloghi = Catalog::where('visibile',1)->get();
 
+        $params = [
+            'cataloghi' => $cataloghi,
+            'carts' => $this->getCarts(),
+            'macrocategorie' => $macrocategorie,
+            'macro_request' => null, //paramtero necessario per stabilire il collapse del menu a sinistra
+            'function' => __FUNCTION__ //visualizzato nei meta tag della header
+        ];
+        return view('website.page.cataloghi',$params);
 
 
     }

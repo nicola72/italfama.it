@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Mail\Contact;
+use App\Mail\Order;
 use App\Model\ItalCart;
 use App\Model\Category;
 use App\Model\Domain;
@@ -14,8 +15,6 @@ use App\Model\Newsitem;
 use App\Model\Page;
 use App\Model\Pairing;
 use App\Model\Product;
-use App\Model\Review;
-use App\Model\Style;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Service\GoogleRecaptcha;
@@ -278,8 +277,8 @@ class CartController extends Controller
         }
         $importo_totale = $importo_totale - $sconto_bonifico;
 
-        $website_config = \Config::get('website_config');
-        $iva = ($importo_totale / 100)* $website_config['iva'];
+        $config = \Config::get('website_config');
+        $iva = ($importo_totale / 100)* $config['iva'];
 
         try{
 
@@ -307,13 +306,25 @@ class CartController extends Controller
         }
         catch(\Exception $e){
 
-            if($website_config['in_sviluppo'])
+            if($config['in_sviluppo'])
             {
                 return back()->with('error',$e->getMessage());
             }
             return back()->with('error',trans('msg.errore_evasione_ordine'));
         }
 
+        $to = ($config['in_sviluppo']) ? $config['email_debug'] : $config['email_ital_ordini'];
+
+        $mail = new Order($order);
+
+        try{
+            \Mail::to($to)->send($mail);
+        }
+        catch(\Exception $e)
+        {
+            \Log::error($e->getMessage());
+            Session::flash('error',trans('msg.impossibile_inviare_email_evasione'));
+        }
 
         Session::flash('success',trans('msg.evasione_avvenuta_con_successo'));
         return redirect()->route('website.risposta_checkout',['locale'=>\App::getLocale(),'id'=>encrypt($order->id)]);

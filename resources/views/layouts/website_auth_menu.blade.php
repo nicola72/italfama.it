@@ -8,7 +8,7 @@
 		</a>
         <small class="hidden-xs"> | </small>
 
-        <a href='{{url(app()->getLocale().'/orders')}}' title="@lang('msg.miei_ordini')">
+        <a href='{{url(app()->getLocale().'/order')}}' title="@lang('msg.miei_ordini')">
             <i class="fa fa-book"></i>
             <span class="hidden-xs text-capitalize">
                 &nbsp;&nbsp;

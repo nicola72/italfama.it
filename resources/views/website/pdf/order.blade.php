@@ -9,14 +9,13 @@
         * {
             margin: 0;
             padding: 0;
-            font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
             box-sizing: border-box;
             font-size: 12px;
         }
 
-        img {
+        /*img {
             max-width: 100%;
-        }
+        }*/
 
         body {
             -webkit-font-smoothing: antialiased;
@@ -38,26 +37,6 @@
         body {
             background-color: #f6f6f6;
             color:#2b2b2b;
-        }
-
-        .body-wrap {
-            background-color: #f6f6f6;
-            width: 100%;
-        }
-
-        .container {
-            display: block !important;
-            max-width: 600px !important;
-            margin: 0 auto !important;
-            /* makes it centered */
-            clear: both !important;
-        }
-
-        .content {
-            max-width: 600px;
-            margin: 0 auto;
-            display: block;
-            padding: 20px;
         }
 
         /* -------------------------------------
@@ -109,10 +88,15 @@
 </head>
 
 <body>
-<table width="100%" style="max-width:600px;margin-left:auto;margin-right:auto;border:1px solid #ddd;margin-top:20px;padding:20px;margin-bottom:20px" cellpadding="2" cellspacing="2">
+<table style="margin-left:auto;margin-right:auto;border:1px solid #ddd;margin-top:20px;padding:20px;margin-bottom:20px" cellpadding="2" cellspacing="2">
+    <tr>
+        <td style="text-align: center">
+            <img src="https://www.italfama.it/img/logo.png" alt="" />
+        </td>
+    </tr>
     <tr>
         <th>
-            <h3>Ordine Italfama n° {{$order->id}} del {{$order->created_at->format('d/m/Y')}}</h3>
+            <h3 style="margin-bottom: 30px">Ordine n° {{$order->id}} del {{$order->created_at->format('d/m/Y')}}</h3>
         </th>
     </tr>
     <tr>
@@ -148,8 +132,8 @@
         </td>
     </tr>
     <tr>
-        <td>
-            <table width="100%" style="margin-bottom:20px" cellpadding="2" cellspacing="2">
+        <td style="text-align:right">
+            <table style="margin-bottom:20px" cellpadding="2" cellspacing="2">
                 <tr>
                     <td style="text-align: right;border-bottom:1px solid #ddd;padding-bottom: 6px;padding-top: 6px;">
                         <h4>@lang('msg.sconto'):</h4>

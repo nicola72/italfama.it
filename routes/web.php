@@ -9,7 +9,7 @@ Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'mid
     Route::get('/azienda', 'Website\PageController@azienda');
     Route::get('/dove_siamo', 'Website\PageController@dove_siamo');
     Route::get('/contatti', 'Website\PageController@contatti');
-    Route::get('/area_riservata', 'Website\PageController@area_riservata');
+    Route::get('/cataloghi', 'Website\PageController@cataloghi');
     Route::get('/categoria/{id}', 'Website\PageController@categoryPage');
     Route::get('/macrocategoria/{id}', 'Website\PageController@macrocategoryPage');
     Route::get('/prodotto/{id}', 'Website\PageController@productPage');
@@ -32,6 +32,9 @@ Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'mid
     Route::get('/cart/destroy/{id}','Website\CartController@destroy');
     Route::get('/cart/checkout','Website\CartController@checkout');
     Route::get('/cart/risposta_checkout/{id}','Website\CartController@risposta_checkout')->name('website.risposta_checkout');
+
+    Route::get('/order','Website\OrderController@index');
+    Route::get('/order/print/{id}','Website\OrderController@print');
 
     Route::post('/invia_formcontatti','Website\PageController@invia_formcontatti')->name('invia_formcontatti');
     Route::get('/{slug}','Website\PageController@page');

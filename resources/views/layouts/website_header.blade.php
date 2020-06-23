@@ -129,9 +129,11 @@
                     <li class="{{(Route::getCurrentRoute()->getActionMethod() == 'contatti') ? 'active':''}}">
                         <a href="{{url(app()->getLocale().'/contatti')}}" style="font-size: 95%">@lang('msg.label_contatti')</a>
                     </li>
-                    <li class="{{(Route::getCurrentRoute()->getActionMethod() == 'area_riservata') ? 'active':''}}">
-                        <a href="{{url(app()->getLocale().'/area_riservata')}}" style="font-size: 95%">@lang('msg.label_area_riservata')</a>
+                    @if(Auth::guard('website')->check())
+                    <li class="{{(Route::getCurrentRoute()->getActionMethod() == 'cataloghi') ? 'active':''}}">
+                        <a href="{{url(app()->getLocale().'/cataloghi')}}" style="font-size: 95%">@lang('msg.cataloghi')</a>
                     </li>
+                    @endif
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
