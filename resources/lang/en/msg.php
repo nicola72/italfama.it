@@ -32,6 +32,7 @@ return[
     'nome' => 'Name',
     'cognome' => 'Surname',
     'telefono' => 'Telefono',
+    'indirizzo' => 'Address',
     'indirizzo_di_consegna' => 'Delivery address',
     'cap' => 'Postal code',
     'citta' => 'City',
@@ -126,4 +127,6 @@ return[
     'non_hai_effettuato_nessun_ordine' => 'You have not placed any order.',
     'ordine' => 'Order',
     'data' => 'Data',
+    'impossibile_inviare_la_richiesta_registrazione' => 'Could not send registration request ... please try again later.',
+    'grazie_per_la_richiesta_registrazione' => 'Thanks for contacting us!<br />Soon as possible to receive username and password to access the reserved area.',
 ];

@@ -47,7 +47,7 @@ class LoginController extends Controller
             'macrocategorie' => $macrocategorie,
             'macro_request' => null, //paramtero necessario per stabilire il collapse del menu a sinistra
             'form_login' => 'form_login',
-            'form_registrazione' => 'form_registrazione',
+            'form_reg' => 'form_registrazione',
         ];
         return view('website.auth.login_and_registration',$params);
     }

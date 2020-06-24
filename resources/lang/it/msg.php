@@ -31,7 +31,8 @@ return[
     'contattaci_per_informazioni' => 'Contattaci per ricevere informazioni',
     'nome' => 'Nome',
     'cognome' => 'Cognome',
-    'telefono' => 'Phone',
+    'telefono' => 'Telefono',
+    'indirizzo' => 'Indirizzo',
     'indirizzo_di_consegna' => 'Indirizzo di consegna',
     'cap' => 'Cap',
     'citta' => 'Città',
@@ -126,4 +127,6 @@ return[
     'non_hai_effettuato_nessun_ordine' => 'Non hai effettuato nessun ordine.',
     'ordine' => 'Ordine',
     'data' => 'Del',
+    'impossibile_inviare_la_richiesta_registrazione' => 'Impossibile inviare la richiesta di registrazione... riprovare più tardi.',
+    'grazie_per_la_richiesta_registrazione' => 'Grazie per averci contattato!<br /> Appena possibile riceverà username e password per accedere alla nostra area riservata.',
 ];

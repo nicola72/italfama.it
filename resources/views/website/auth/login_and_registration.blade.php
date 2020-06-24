@@ -12,6 +12,7 @@
             </div>
         </div>
     </section>
+    @include('layouts.website_flash-message')
     <section class="mainContent clearfix productsContent">
         <div class="container">
             <div class="row">
@@ -28,7 +29,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="page-header">
-                                <h3  class="fjalla" style="color:#840025;">@lang('msg.crea_un_account')</h3>
+                                <h3  class="fjalla" style="color:#840025;">@lang('msg.registrazione')</h3>
                             </div>
                             @include('website.form.form_registrazione')
                         </div>

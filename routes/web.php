@@ -21,9 +21,7 @@ Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'mid
     Route::get('/login', 'Website\Auth\LoginController@showLoginAndRegisterForm')->name('website.login');
     Route::post('/login','Website\Auth\LoginController@login')->name('website.login');
     Route::get('/logout', 'Website\Auth\LoginController@logout')->name('website.logout');
-    Route::get('/register','Website\Auth\RegisterController@showRegistrationForm')->name('website.register');
     Route::post('/register','Website\Auth\RegisterController@register');
-    Route::get('/password/reset','Website\Auth\ForgotPasswordController@showLinkRequestForm')->name('website.password.request');
 
     Route::get('/cart','Website\CartController@index');
     Route::get('/cart/addproduct/{id}','Website\CartController@addproduct');
