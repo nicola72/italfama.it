@@ -246,7 +246,7 @@ body, html{
     margin-bottom:20px;
     font-size:14px;
     padding-bottom:6px;
-    border-bottom:1px solid #f7f7f7;
+    border-bottom:1px solid #ddd;
 }
 
 .error{

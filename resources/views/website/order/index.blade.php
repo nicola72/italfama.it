@@ -1,11 +1,11 @@
 @extends('layouts.website')
 @section('content')
-    <section class="lightSection clearfix pageHeader">
+    <section class="lightSection clearfix pageHeader" style="background-color: #cdc8c6;">
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
                     <div class="page-title">
-                        <h2 class="fjalla">@lang('msg.miei_ordini')</h2>
+                        <h2 class="fjalla" style="color: #6f2412;">@lang('msg.miei_ordini')</h2>
                     </div>
                 </div>
 

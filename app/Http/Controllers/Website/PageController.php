@@ -262,7 +262,7 @@ class PageController extends Controller
 
     protected function tutti_prodotti(Request $request,$url)
     {
-        $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
+        $macrocategorie = Macrocategory::where('stato',1)->whereNotIn('id', [18,19,20,21,30])->orderBy('order')->get();
 
         //le configurazioni varie del sito web
         $website_config = \Config::get('website_config');
@@ -296,8 +296,8 @@ class PageController extends Controller
                 }
             }
 
-
-            $pairings = $macro->pairings()->where('visibile',1)->where('italfama',1)->get();
+            //NO ABBiNAMENTI
+            /*$pairings = $macro->pairings()->where('visibile',1)->where('italfama',1)->get();
             if($pairings)
             {
                 foreach ($pairings as $pairing)
@@ -318,7 +318,7 @@ class PageController extends Controller
                     ];
                     $catalogo->push($elem);
                 }
-            }
+            }*/
         }
 
         $totali = $catalogo->count();
@@ -651,21 +651,24 @@ class PageController extends Controller
             {
                 //per stile
                 case 'style':
+                    $nome = 'nome_'.\App::getLocale();
                     $pairings = $model->pairings_for_list()
-                        ->sortBy('prezzo')
+                        ->sortBy($nome)
                         ->where('style_id',$parametro_filtro)
                         ->paginate($per_page);
                     break;
                 //per materiale scacchi
                 case 'material_chess':
+                    $nome = 'nome_'.\App::getLocale();
                     $pairings = $model->pairings_for_list($tipo_filtro,$parametro_filtro)
-                        ->sortBy('prezzo')
+                        ->sortBy($nome)
                         ->paginate($per_page);
                     break;
                 //per materiale scacchiera
                 case 'material_board':
+                    $nome = 'nome_'.\App::getLocale();
                     $pairings = $model->pairings_for_list($tipo_filtro,$parametro_filtro)
-                        ->sortBy('prezzo')
+                        ->sortBy($nome)
                         ->paginate($per_page);
                     break;
                 default:
@@ -700,8 +703,9 @@ class PageController extends Controller
                         ->paginate($per_page);
                     break;
                 default:
+                    $nome = 'nome_'.\App::getLocale();
                     $pairings = $model->pairings_for_list()
-                        ->sortBy('prezzo')
+                        ->sortBy($nome)
                         ->paginate($per_page);
             }
         }

@@ -119,12 +119,9 @@ class LoginController extends Controller
     {
         $request->session()->regenerate();
         $this->clearLoginAttempts($request);
+        $url = '/';
 
-        $website_config = \Config::get('website_config');
-        $domain = Domain::where('locale',\App::getLocale())->first();
-        $url = $website_config['protocol'].'://www.'.$domain->nome;
-
-        return redirect($this->redirectTo);
+        return ['result' => 1, 'url' => $url, 'msg' => trans('msg.successo_login')];
     }
 
     /**
@@ -139,17 +136,10 @@ class LoginController extends Controller
         return ['result' => 1,'msg'=>trans('msg.credenziali_corrette')];
     }
 
-    /**
-     * Get the failed login response instance.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
     protected function sendFailedLoginResponse(Request $request)
     {
-        return back()->with('error',trans('auth.failed'));
+        return ['result' => 0,'msg'=>trans('auth.failed')];
     }
 
     /**
