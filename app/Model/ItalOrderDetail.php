@@ -17,7 +17,7 @@ class ItalOrderDetail extends Model
 
     public function order()
     {
-        return $this->belongsTo('App\Model\Order');
+        return $this->belongsTo('App\Model\ItalOrder','order_id');
     }
 
     public function product()
