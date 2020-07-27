@@ -35,6 +35,7 @@ Route::group(['prefix' => '{locale}','where' => ['locale' => '[a-zA-Z]{2}'],'mid
     Route::get('/order/print/{id}','Website\OrderController@print');
 
     Route::post('/invia_formcontatti','Website\PageController@invia_formcontatti')->name('invia_formcontatti');
+    Route::post('/invia_forminformazioni','Website\PageController@invia_forminformazioni')->name('invia_forminformazioni');
 
 });
 

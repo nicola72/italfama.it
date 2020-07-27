@@ -1,12 +1,12 @@
 <div class="col-sm-4">
     <div class="productBox">
         <div class="productImage clearfix">
-            <a href="{{$pairing->url()}}">
+            <a href="{{url(app()->getLocale().'/pairing',['id'=>encrypt($pairing->id)])}}">
                 <img src="{{ $chess_domain.$website_config['ital_small_dir'].$pairing->cover() }}" alt="{{$seo->alt ?? ''}}">
             </a>
         </div>
         <div class="productCaption clearfix">
-            <a href="{{$pairing->url()}}">
+            <a href="{{url(app()->getLocale().'/pairing',['id'=>encrypt($pairing->id)])}}">
                 <div class="titolo_prodotto">
                     {{$pairing->{'nome_'.app()->getLocale()} }}
                 </div>

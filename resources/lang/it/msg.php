@@ -130,4 +130,5 @@ return[
     'impossibile_inviare_la_richiesta_registrazione' => 'Impossibile inviare la richiesta di registrazione... riprovare più tardi.',
     'grazie_per_la_richiesta_registrazione' => 'Grazie per averci contattato!<br /> Appena possibile riceverà username e password per accedere alla nostra area riservata.',
     'successo_login' => 'Login effettuato con successo',
+    'richiedi_informazioni' => 'Richiedi Informazioni',
 ];

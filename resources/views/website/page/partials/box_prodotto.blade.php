@@ -1,12 +1,12 @@
 <div class="col-sm-4">
     <div class="productBox">
         <div class="productImage clearfix">
-            <a href="{{ $product->url() }}">
+            <a href="{{ url(app()->getLocale().'/prodotto',['id'=> encrypt($product->id)]) }}">
                 <img src="{{ $chess_domain.$website_config['ital_small_dir'].$product->cover() }}" alt="{{$seo->alt ?? ''}}">
             </a>
         </div>
         <div class="productCaption clearfix">
-            <a href="{{ $product->url() }}">
+            <a href="{{ url(app()->getLocale().'/prodotto',['id'=> encrypt($product->id)]) }}">
                 <div class="titolo_prodotto">
                     @if(strlen($product->{'nome_'.app()->getLocale()}) > 50))
                         {{ substr($product->{'nome_'.app()->getLocale()},0,50) }}...

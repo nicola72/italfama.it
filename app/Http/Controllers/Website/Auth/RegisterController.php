@@ -5,6 +5,7 @@ use App\Mail\Registration;
 use App\Model\Domain;
 use App\Model\Macrocategory;
 use App\Model\Page;
+use App\Service\GoogleRecaptcha;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -22,6 +23,13 @@ class RegisterController extends Controller
     {
         $data = $request->post();
         $config = \Config::get('website_config');
+        $secret = $config['recaptcha_secret'];
+
+        if(!GoogleRecaptcha::verifyGoogleRecaptcha($data,$secret))
+        {
+            return ['result' => 0, 'msg' => trans('msg.il_codice_di_controllo_errato')];
+        }
+
         $to = ($config['in_sviluppo']) ? $config['email_debug'] : $config['email'];
 
         $mail = new Registration($data);

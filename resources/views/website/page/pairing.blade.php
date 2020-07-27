@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <div class="media-body">
+                            <div class="">
 
                                 <h2 style="margin-top: 10px;">{{ $pairing->{'nome_'.app()->getLocale()} }}</h2>
 
@@ -136,6 +136,9 @@
                             </div>
                         </div>
                     </div>
+                    <!-- FORM PER Richiesta informazioni -->
+                        @include('website.form.form_informazioni')
+                    <!-- -->
                 </div>
 
                 <!-- i Prodotti singoli -->

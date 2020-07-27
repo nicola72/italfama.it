@@ -130,4 +130,5 @@ return[
     'impossibile_inviare_la_richiesta_registrazione' => 'Could not send registration request ... please try again later.',
     'grazie_per_la_richiesta_registrazione' => 'Thanks for contacting us!<br />Soon as possible to receive username and password to access the reserved area.',
     'successo_login' => 'Login successful',
+    'richiedi_informazioni' => 'Request information',
 ];

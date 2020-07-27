@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Mail\Contact;
+use App\Mail\Information;
 use App\Model\Catalog;
 use App\Model\ItalCart;
 use App\Model\Category;
@@ -85,6 +86,8 @@ class PageController extends Controller
             'macrocategory' => false,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null,
+            'form_name' => 'form_informazioni',
+            'form_action' => route('invia_forminformazioni',app()->getLocale()),
             'product' => $product,
             'function' => __FUNCTION__ //visualizzato nei meta tag della header
         ];
@@ -107,6 +110,8 @@ class PageController extends Controller
             'macrocategory' => false,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null,
+            'form_name' => 'form_informazioni',
+            'form_action' => route('invia_forminformazioni',app()->getLocale()),
             'pairing' => $pairing,
             'pairing_correlati' => $pairing_correlati,
             'function' => __FUNCTION__ //visualizzato nei meta tag della header
@@ -478,6 +483,33 @@ class PageController extends Controller
         $to = ($config['in_sviluppo']) ? $config['email_debug'] : $config['email'];
 
         $mail = new Contact($data);
+
+        try{
+            \Mail::to($to)->send($mail);
+        }
+        catch(\Exception $e)
+        {
+            return ['result' => 0, 'msg' => $e->getMessage()];
+        }
+
+        return ['result' => 1, 'msg' => trans('msg.grazie_per_averci_contattato')];
+
+    }
+
+    public function invia_forminformazioni(Request $request)
+    {
+        $data = $request->post();
+        $config = \Config::get('website_config');
+        $secret = $config['recaptcha_secret'];
+
+        if(!GoogleRecaptcha::verifyGoogleRecaptcha($data,$secret))
+        {
+            return ['result' => 0, 'msg' => trans('msg.il_codice_di_controllo_errato')];
+        }
+
+        $to = ($config['in_sviluppo']) ? $config['email_debug'] : $config['email'];
+
+        $mail = new Information($data);
 
         try{
             \Mail::to($to)->send($mail);
