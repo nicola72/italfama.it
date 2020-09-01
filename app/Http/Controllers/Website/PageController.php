@@ -40,10 +40,11 @@ class PageController extends Controller
         $abbinamenti_offerta = Pairing::where('visibile',1)->where('offerta',1)->get();
         $news = Newsitem::where('visibile',1)->get();
 
-
+        $canonical = (\App::getLocale() == 'it') ? 'https://www.chess-store.it' : 'https://www.chess-store.org';
 
         $params = [
             'carts' => $this->getCarts(),
+            'canonical' => $canonical,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null, //paramtero necessario per stabilire il collapse del menu a sinistra
             'prodotti_novita' => $prodotti_novita,
@@ -83,6 +84,7 @@ class PageController extends Controller
 
         $params = [
             'carts' => $this->getCarts(),
+            'canonical' => $product->url(),
             'macrocategory' => false,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null,
@@ -107,6 +109,7 @@ class PageController extends Controller
 
         $params = [
             'carts' => $this->getCarts(),
+            'canonical' => $pairing->url(),
             'macrocategory' => false,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null,
@@ -134,6 +137,8 @@ class PageController extends Controller
         //il parametro $model può essere o un App\Model|Macrocategory o un App\Model\Category
         //se il model è di tipo App\Model\Category allora vuol dire che siamo in una pagina categoria
         $category = ($model instanceof Category) ? $model : false;
+
+        $canonical = $model->url();
 
         //le configurazioni varie del sito web
         $website_config = \Config::get('website_config');
@@ -193,6 +198,7 @@ class PageController extends Controller
 
         $params = [
             'carts' => $this->getCarts(),
+            'canonical' => $canonical,
             'macrocategory' => $macrocategory,
             'macrocategorie' => $macrocategorie,
             'macro_request' => $macrocategory->id,
@@ -394,8 +400,13 @@ class PageController extends Controller
     {
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
 
+        //prendo la pagina di Chessstore per il canonical
+        $page = Page::where('nome','azienda')->first();
+        $canonical = $page->url();
+
         $params = [
             'carts' => $this->getCarts(),
+            'canonical' => $canonical,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null, //paramtero necessario per stabilire il collapse del menu a sinistra
             'function' => __FUNCTION__ //visualizzato nei meta tag della header
@@ -407,8 +418,13 @@ class PageController extends Controller
     {
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
 
+        //prendo la pagina di Chessstore per il canonical
+        $page = Page::where('nome','dove_siamo')->first();
+        $canonical = $page->url();
+
         $params = [
             'carts' => $this->getCarts(),
+            'canonical' => $canonical,
             'macrocategorie' => $macrocategorie,
             'macro_request' => null, //paramtero necessario per stabilire il collapse del menu a sinistra
             'function' => __FUNCTION__ //visualizzato nei meta tag della header
@@ -420,8 +436,13 @@ class PageController extends Controller
     {
         $macrocategorie = Macrocategory::where('stato',1)->orderBy('order')->get();
 
+        //prendo la pagina di Chessstore per il canonical
+        $page = Page::where('nome','contatti')->first();
+        $canonical = $page->url();
+
         $params = [
             'carts' => $this->getCarts(),
+            'canonical' => $canonical,
             'macrocategorie' => $macrocategorie,
             'form_action' => route('invia_formcontatti',app()->getLocale()),
             'form_name' => 'form_contatti',

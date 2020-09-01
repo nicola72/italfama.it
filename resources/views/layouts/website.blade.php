@@ -7,6 +7,8 @@
             <title>Italfama</title>
         @endif
 
+        <link rel="canonical" href="{{$canonical ?? ''}}"/>
+
         <meta charset="utf-8">
         <meta name="Keywords" content="Italfam" />
         <meta name="Description" content="Italfama è azienda  leader a livello mondiale nella produzione  di scacchi, scacchiere e statue bronzate con sede a Calenzano, Firenze, Toscana" />
